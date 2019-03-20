@@ -1,0 +1,32 @@
+.hero-card {
+  border: 2px solid white;
+  display: flex;
+
+  .portrait-wrapper {
+    border-right: 2px solid white;
+    padding: 0 14px;
+    width: 150px;
+  }
+
+  .hero-card-info {
+    padding: 4px 14px;
+
+    .hero-info-stats {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-around;
+      .hero-info-stat-value {
+        border: 1px white solid;
+        border-radius: 24px;
+        padding: 0 5px;
+        margin: 0 5px
+      }
+    }
+    .hero-info-stat-name {
+      margin-top: 5px;
+      font-size: 10px;
+      display: flex;
+      justify-content: space-around
+    }
+  }
+}

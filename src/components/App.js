@@ -3,6 +3,7 @@ import './App.scss';
 import ReactDOM from 'react-dom';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import {connect} from 'react-redux'
+// import * as actions from './../actions'
 
 import constants from './../constants'
 
@@ -26,6 +27,7 @@ class App extends Component {
   constructor(props) {
     super(props)
   }
+
   componentWillMount() {
     const {dispatch} = this.props;
     dispatch(loadHero(newHero))
@@ -42,7 +44,6 @@ class App extends Component {
        }
      }
 
-    console.log(this.props)
     if (!this.props.userHero.name) {return (<div className="App"><header className="App-header">Loading...</header></div>)}
     else {
     return (

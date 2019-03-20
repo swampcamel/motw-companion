@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
+import Nav from './components/Nav'
 import App from './components/App';
 import { HashRouter } from 'react-router-dom';
 import { createStore, applyMiddleware } from 'redux';
@@ -20,6 +21,7 @@ const render = (Component) => {
   ReactDOM.render(
   <HashRouter>
     <Provider store={store}>
+      <Nav />
       <App />
     </Provider>
   </HashRouter>,
