@@ -1,20 +1,47 @@
 .hero-card {
   border: 2px solid white;
   display: flex;
+  width: 80%;
+  max-width: 900px;
 
+
+
+  h3, h4 {
+    padding: 0 24px;
+    margin: 0;
+  }
   .portrait-wrapper {
     border-right: 2px solid white;
     padding: 0 14px;
     width: 150px;
   }
 
+  .hero-card-row {
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+  }
+
+  .hero-card-titles {
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .hero-card-level, .hero-card-harm, .hero-card-xp, .hero-card-luck {
+    display: flex;
+    h4 {
+      display: inline-block;
+    }
+  }
   .hero-card-info {
     padding: 4px 14px;
+    width: 100%;
 
     .hero-info-stats {
       margin-top: 10px;
       display: flex;
       justify-content: space-around;
+      width: 220px;
       .hero-info-stat-value {
         border: 1px white solid;
         border-radius: 24px;
