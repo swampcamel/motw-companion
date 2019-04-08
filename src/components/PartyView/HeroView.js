@@ -6,7 +6,7 @@ class HeroView extends Component {
     return (
       <div className='hero-card'>
         <div className='portrait-wrapper'>
-          <iframe src="https://giphy.com/embed/5LjZYs9wqFEEo" width="100%"  frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+          <iframe src="https://giphy.com/embed/5LjZYs9wqFEEo" width="100%"  frameBorder="0" className="giphy-embed" allowFullScreen></iframe>
         </div>
         <div className='hero-card-info'>
           <div className='hero-card-row hero-card-titles'>

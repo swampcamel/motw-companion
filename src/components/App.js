@@ -3,13 +3,24 @@ import './App.scss';
 import ReactDOM from 'react-dom';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import {connect} from 'react-redux'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 // import * as actions from './../actions'
 import Nav from './Nav';
 import Welcome from './Welcome/Welcome';
+import PartyView from './PartyView/PartyView';
+import CharacterGen from './CharacterGen/CharacterGen';
 
 import constants from './../constants'
 
 const { actionTypes } = constants;
+const theme = createMuiTheme({
+  palette: {
+    type: 'dark'
+  },
+  typography: {
+      useNextVariants: true,
+  }
+});
 // const newHero = generateHero("Kromdor", "The Monstrous", "Demon", "Pure Drive: Cruelty", "filler stuff",
 // {"charm": 2, "cool": 0, "sharp": -1, "tough": -1, "weird": 3},
 // [{"base":
@@ -31,9 +42,13 @@ class App extends Component {
     return (
       <div className="App">
         <Nav />
+        <MuiThemeProvider theme={theme}>
         <Switch>
-          <Route exact path='/' render={ () => <Welcome/> }/>
+          <Route exact path='/' render={ () => <Welcome/> } />
+          <Route path='/PartyView' render={ () => <PartyView/>} />
+          <Route path='/CharacterMaker' render={ () => <CharacterGen/>} />
         </Switch>
+        </MuiThemeProvider>
       </div>
   )}
 }
