@@ -1,13 +1,17 @@
 import constants from './../constants';
 const { actionTypes }  = constants;
 
-const mainReducer = (state = { userHero: {} }, action) => {
-  let newState;
-
+const mainReducer = (state = {}, action) => {
+let newState;
+let newHeroes;
+let newHero;
   switch (action.type) {
-    case actionTypes.GET_HERO:
-      newState = Object.assign({}, state, { userHero: action.userHero });
-      return newState;
+    case actionTypes.FETCH_HEROES:
+      newState = Object.assign({}, state, {
+        isFetching: false,
+        heroes: action.payload
+      })
+      return newState
 
     default:
       return state;

@@ -1,10 +1,10 @@
-  var firebaseConfig  = {
-    apiKey: "AIzaSyDC8f7ufbZWD3TuppemP3mrXL5bwYttoIY",
-    authDomain: "motw-companion.firebaseapp.com",
-    databaseURL: "https://motw-companion.firebaseio.com",
-    projectId: "motw-companion",
-    storageBucket: "motw-companion.appspot.com",
-    messagingSenderId: "758779301176"
-  };
+import * as firebase from "firebase";
+import firebaseConfig from './keys'
+
+firebase.initializeApp(firebaseConfig);
+
+const databaseRef = firebase.database().ref();
+
+export const heroesRef = databaseRef.child("heroes");
 
 export default firebaseConfig;

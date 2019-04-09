@@ -1,1 +1,2 @@
-export const GET_HERO = 'GET_HERO'
+export const FETCH_HEROES = 'FETCH_HEROES'
+export const ADD_HERO = 'ADD_HERO'

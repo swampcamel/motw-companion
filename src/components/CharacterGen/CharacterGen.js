@@ -1,5 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import _ from 'lodash'
+import generateHero from './HeroModel'
+import {addHero} from './../../actions'
 import logo from './../../img/motwcharlogo.png';
 import { withStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
@@ -41,6 +45,47 @@ const styles = theme => ({
 class CharacterGen extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      newHeroName: '',
+      newHeroClass: '',
+      newHeroLevel: 1,
+      newHeroImgUrl: ''
+    }
+  }
+
+  handleFormChange = event => {
+    switch(event.target.name) {
+      case 'newHeroName': {
+        this.setState({newHeroName: event.target.value})
+        break;
+      }
+      case 'newHeroClass': {
+        this.setState({newHeroClass: event.target.value})
+        break;
+      }
+      case 'newHeroLevel': {
+        this.setState({newHeroLevel: event.target.value})
+        break;
+      }
+      case 'newHeroImgUrl': {
+        this.setState({newHeroImgUrl: event.target.value})
+      }
+      default: {
+        console.log("how?")
+      }
+    }
+  }
+
+  handleFormSubmit = () =>  {
+    let newHero = generateHero(
+      this.state.newHeroName,
+      this.state.newHeroClass,
+      this.state.newHeroLevel,
+      this.state.newHeroImgUrl
+    )
+    addHero(newHero)
+    console.log(newHero)
+    this.setState({newHeroName: '', newHeroClass: '', newHeroLevel: 1, newHeroImgUrl: ''})
   }
 
   render() {
@@ -48,52 +93,73 @@ class CharacterGen extends React.Component {
     return (
       <div className="centered pad-top">
         <img src={logo}></img>
+        <form>
         <div className={classes.fwrap}>
-          <Input
-            placeholder="Name"
-            className={classes.input}
-            inputProps={{
-              'aria-label': 'Enter Name',
+            <Input
+              type="text"
+              placeholder="Name"
+              className={classes.input}
+              inputProps={{
+                'aria-label': 'Enter Name',
+                name: 'newHeroName',
+                id: 'hero-id'
+              }}
+              onChange={this.handleFormChange}
+              />
+            <FormControl className={classes.formControl}>
+            <InputLabel htmlFor="hero-class">Select Class</InputLabel>
+            <Select
+              value={this.state.newHeroClass}
+              onChange={this.handleFormChange}
+              inputProps={{
+                name: 'newHeroClass',
+                id: 'hero-class',
+              }}
+            >
+              <MenuItem value="chosen">The Chosen</MenuItem>
+              <MenuItem value="crooked">The Crooked</MenuItem>
+              <MenuItem value="divine">The Divine</MenuItem>
+              <MenuItem value="expert">The Expert</MenuItem>
+              <MenuItem value="flake">The Flake</MenuItem>
+              <MenuItem value="initiate">The Initiate</MenuItem>
+              <MenuItem value="monstrous">The Monstrous</MenuItem>
+              <MenuItem value="mundane">The Mundane</MenuItem>
+              <MenuItem value="professional">The Professional</MenuItem>
+              <MenuItem value="spellslinger">The Spell-Slinger</MenuItem>
+              <MenuItem value="spooky">The Spooky</MenuItem>
+              <MenuItem value="wronged">The Wronged</MenuItem>
+            </Select>
+          </FormControl>
+          <TextField
+            type="number"
+            id="level"
+            label="Level"
+            value={this.state.newHeroLevel}
+            onChange={this.handleFormChange}
+            className={classes.textField}
+            InputLabelProps={{
+              shrink: true,
             }}
-            />
-          <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="hero-class">Select Class</InputLabel>
-          <Select
-            value='a'
-            onChange={this.handleChange}
             inputProps={{
-              name: 'hero-class',
-              id: 'hero-class',
+              name: 'newHeroLevel',
+              id: 'hero-level'
             }}
-          >
-            <MenuItem value="chosen">The Chosen</MenuItem>
-            <MenuItem value="crooked">The Crooked</MenuItem>
-            <MenuItem value="divine">The Divine</MenuItem>
-            <MenuItem value="expert">The Expert</MenuItem>
-            <MenuItem value="flake">The Flake</MenuItem>
-            <MenuItem value="initiate">The Initiate</MenuItem>
-            <MenuItem value="monstrous">The Monstrous</MenuItem>
-            <MenuItem value="mundane">The Mundane</MenuItem>
-            <MenuItem value="professional">The Professional</MenuItem>
-            <MenuItem value="spellslinger">The Spell-Slinger</MenuItem>
-            <MenuItem value="spooky">The Spooky</MenuItem>
-            <MenuItem value="wronged">The Wronged</MenuItem>
-          </Select>
-        </FormControl>
-        <TextField
-          id="level"
-          label="Level"
-          value="1"
-          onChange={this.handleChange}
-          type="number"
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
+            margin="normal"
+          />
+        <Input
+          type="text"
+          placeholder="Paste Image URL"
+          className={classes.input}
+          inputProps={{
+            'aria-label': 'Enter Name',
+            name: 'newHeroImgUrl',
+            id: 'hero-img'
           }}
-          margin="normal"
-        />
-        </div>
-        <button>Submit</button>
+          onChange={this.handleFormChange}
+          />
+          </div>
+          <button type='button' onClick={this.handleFormSubmit}>Submit</button>
+        </form>
       </div>
     )
   }

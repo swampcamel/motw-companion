@@ -1,23 +1,28 @@
 import React from 'react'
 import PropTypes from 'prop-types';
+import { connect } from "react-redux";
+import _ from "lodash";
 import {Link} from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles';
 
+import * as actions from "./../../actions";
 import HeroView from './HeroView'
 
 import portrait from './../../img/charportrait.png'
 import bar from './../../img/bar.png'
+import leftArrow from './../../img/left-arrow.png'
+import rightArrow from './../../img/right-arrow.png'
 
 const styles = theme => ({
   portrait: {
     borderRadius: "250px",
+    zIndex: 5
   },
   heroWrapper: {
     display: 'flex'
   },
   heroStats: {
     transform: 'translateX(-40px)',
-    zIndex: '-150'
   },
   heroSecondBar: {
     transform: 'translateX(20px)'
@@ -59,45 +64,148 @@ const styles = theme => ({
     zIndex: '-2',
     top: '2px',
     right: 0,
-    width: '30%',
+    width: '10%',
     height: '86%',
     backgroundColor: '#282c34',
   },
   heroName: {
     paddingLeft: "20px",
-    marginBottom: "15px"
+    marginBottom: "15px",
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+valueStyle: {
+    position: 'absolute',
+    top: '30%',
+    right: '15%'
+  },
+  barWrapper: {
+    display: 'flex'
+  },
+  controlsWrapper: {
+    display: 'flex',
+    alignItems: 'baseline',
+    justifyContent: 'space-between',
+    width: '82px',
+    zIndex: 200,
+    transform: 'translate(60px, 5px)'
+  },
+  rightToggle: {
+    background: `url(${rightArrow})`,
+    width: '35px',
+    height: '35px',
+    '&:hover': {
+      transform: 'scale(1.07)'
+    }
+  },
+  leftToggle: {
+    background: `url(${leftArrow})`,
+    width: '35px',
+    height: '35px',
+    '&:hover': {
+      transform: 'scale(1.07)'
+    }
   }
 })
 
 class PartyView extends React.Component {
   constructor(props) {
     super(props)
+
+  }
+
+  componentWillMount() {
+    this.props.fetchHeroes();
+  }
+
+  handleControlToggle = event => {
+    console.log(event.target.id)
+    let toggleQuery = event.target.id.split('_')
+    if (toggleQuery[1] === 'hp') {
+      (toggleQuery[0] === 'inc') ?
+      this.props.changeHeroHp(
+        toggleQuery[2],
+        (this.props.data.heroes[toggleQuery[2]].harmPointValue + 1)
+      ) :
+      this.props.changeHeroHp(
+        toggleQuery[2],
+        (this.props.data.heroes[toggleQuery[2]].harmPointValue - 1)
+      )
+    } else if (toggleQuery[1] === 'luck') {
+      (toggleQuery[0] === 'inc') ?
+      this.props.changeHeroLuck(
+        toggleQuery[2],
+        (this.props.data.heroes[toggleQuery[2]].luckPointValue + 1)
+      ) :
+      this.props.changeHeroLuck(
+        toggleQuery[2],
+        (this.props.data.heroes[toggleQuery[2]].luckPointValue - 1)
+      )
+    }
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, data } = this.props
+    const heroes = _.map(data.heroes, (hero, key) => {
+      let hpBarWidth, luckBarWidth
+      if (hero.harmPointValue <= 0) {
+        hpBarWidth = '100%'
+      } else {
+        hpBarWidth = 100 - (Math.round( (hero.harmPointValue / 7) * 100 ))
+        hpBarWidth = parseInt(hpBarWidth) + '%'
+      }
+      if (hero.luckPointValue <= 0) {
+        luckBarWidth = '100%'
+      } else {
+        luckBarWidth = 100 - (Math.round( (hero.luckPointValue / 7) * 100 ))
+        luckBarWidth = parseInt(luckBarWidth) + '%'
+      }
+      return <div key={key} className={classes.heroWrapper}>
+              <div className={classes.portrait} style={{background: `url(${hero.imgUrl})`}}>
+                <img src={portrait} width="103%" height="102%" style={{transform: 'translate(-5px, -3px)'}}/>
+              </div>
+              <div className={classes.heroStats}>
+                <div className={classes.heroName}>
+                  <h2>{hero.name}</h2>
+                  <h4>THE {hero.type.toUpperCase()}</h4>
+                  <h3>Lv. {hero.level}</h3>
+                </div>
+                <div className={classes.barWrapper}>
+                  <div className={classes.heroFirstBar}>
+                    <img src={bar}/>
+                    <div className={classes.heroFirstBarFill}></div>
+                    <div className={classes.heroFirstBarMask} style={{width: hpBarWidth}}></div>
+                    <div className={classes.valueStyle}><h4>{hero.harmPointValue} / 7</h4></div>
+                  </div>
+                  <div className={classes.controlsWrapper}>
+                    <div className={classes.leftToggle} id={'dec_hp_'+key} onClick={this.handleControlToggle}>
+                    </div>
+                    <div className={classes.rightToggle} id={'inc_hp_'+key} onClick={this.handleControlToggle}>
+                    </div>
+                  </div>
+                </div>
+                <div className={classes.barWrapper}>
+                  <div className={classes.heroSecondBar}>
+                    <img src={bar}/>
+                    <div className={classes.heroSecondBarFill}></div>
+                    <div className={classes.heroSecondBarMask} style={{width: luckBarWidth}}></div>
+                    <div className={classes.valueStyle}><h4>{hero.luckPointValue} / 7</h4></div>
+                  </div>
+                  <div className={classes.controlsWrapper}>
+                    <div className={classes.leftToggle} id={'dec_luck_'+key} onClick={this.handleControlToggle}>
+                    </div>
+                    <div className={classes.rightToggle} onClick={this.handleControlToggle} id={'inc_luck_'+key}>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+    })
+    console.log(this.props)
     return(
       <div className="pad-top centered">
-        <div className={classes.heroWrapper}>
-          <div className={classes.portrait} style={{background: "url(https://gamepedia.cursecdn.com/allstars_gamepedia/d/dd/Carbot_Mephisto_Portrait.png?version=39740fe1184e09032283fbf50b7c5784)"}}>
-            <img src={portrait} height="102%" style={{transform: 'translate(-5px, -3px)'}}/>
-          </div>
-          <div className={classes.heroStats}>
-            <div className={classes.heroName}>
-              <h2>Lord Kromdor</h2>
-            </div>
-            <div className={classes.heroFirstBar}>
-              <img src={bar}/>
-              <div className={classes.heroFirstBarFill}></div>
-              <div className={classes.heroFirstBarMask}></div>
-            </div>
-            <div className={classes.heroSecondBar}>
-              <img src={bar}/>
-              <div className={classes.heroSecondBarFill}></div>
-              <div className={classes.heroSecondBarMask}></div>
-            </div>
-          </div>
-        </div>
+        {heroes}
         <Link to='/CharacterMaker'>
           <button>Add Adventurer</button>
         </Link>
@@ -110,4 +218,14 @@ PartyView.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(PartyView);
+const mapStateToProps = state => {
+  let data
+  if(!state.isFetching) {
+    data = state.data
+  }
+  return {
+    data
+  };
+};
+
+export default connect(mapStateToProps, actions)(withStyles(styles)(PartyView));
