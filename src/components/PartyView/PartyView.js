@@ -45,6 +45,7 @@ const styles = theme => ({
     width: '80%',
     height: '86%',
     backgroundColor: '#282c34',
+    transition: 'width ease-in-out 0.5s'
   },
   heroFirstBar: {
     position: 'relative'
@@ -67,6 +68,7 @@ const styles = theme => ({
     width: '10%',
     height: '86%',
     backgroundColor: '#282c34',
+    transition: 'width ease-in-out 0.5s'
   },
   heroName: {
     paddingLeft: "20px",
@@ -112,7 +114,6 @@ valueStyle: {
 class PartyView extends React.Component {
   constructor(props) {
     super(props)
-
   }
 
   componentWillMount() {
@@ -120,8 +121,8 @@ class PartyView extends React.Component {
   }
 
   handleControlToggle = event => {
-    console.log(event.target.id)
     let toggleQuery = event.target.id.split('_')
+    // ids are written with a modifier_target_key syntax ex. inc_hp_-fakeKey
     if (toggleQuery[1] === 'hp') {
       (toggleQuery[0] === 'inc') ?
       this.props.changeHeroHp(
@@ -202,7 +203,6 @@ class PartyView extends React.Component {
               </div>
             </div>
     })
-    console.log(this.props)
     return(
       <div className="pad-top centered">
         {heroes}
