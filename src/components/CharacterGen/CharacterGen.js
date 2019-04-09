@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import _ from 'lodash'
 import generateHero from './HeroModel'
 import {addHero} from './../../actions'
 import logo from './../../img/motwcharlogo.png';
@@ -70,6 +68,7 @@ class CharacterGen extends React.Component {
       }
       case 'newHeroImgUrl': {
         this.setState({newHeroImgUrl: event.target.value})
+        break;
       }
       default: {
         console.log("how?")
@@ -94,7 +93,7 @@ class CharacterGen extends React.Component {
     const { classes } = this.props;
     return (
       <div className="centered pad-top">
-        <img src={logo}></img>
+        <img src={logo} alt='M O T W Character Maker'></img>
         <form>
         <div className={classes.fwrap}>
             <Input

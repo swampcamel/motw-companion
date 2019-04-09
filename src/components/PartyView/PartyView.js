@@ -2,11 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import _ from "lodash";
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles';
 
 import * as actions from "./../../actions";
-import HeroView from './HeroView'
 
 import portrait from './../../img/charportrait.png'
 import bar from './../../img/bar.png'
@@ -122,8 +121,8 @@ class PartyView extends React.Component {
   }
 
   handleControlToggle = event => {
+    // target ids are written with a modifier_target_key syntax eg. inc_hp_-fakeKey
     let toggleQuery = event.target.id.split('_')
-    // ids are written with a modifier_target_key syntax ex. inc_hp_-fakeKey
     if (toggleQuery[1] === 'hp') {
       (toggleQuery[0] === 'inc') ?
       this.props.changeHeroHp(
@@ -165,7 +164,7 @@ class PartyView extends React.Component {
       }
       return <div key={key} className={classes.heroWrapper}>
               <div className={classes.portrait} style={{background: `url(${hero.imgUrl})`}}>
-                <img src={portrait} width="103%" height="102%" style={{transform: 'translate(-5px, -3px)'}}/>
+                <img src={portrait} alt='' width="103%" height="102%" style={{transform: 'translate(-5px, -3px)'}}/>
               </div>
               <div className={classes.heroStats}>
                 <div className={classes.heroName}>
@@ -175,10 +174,12 @@ class PartyView extends React.Component {
                 </div>
                 <div className={classes.barWrapper}>
                   <div className={classes.heroFirstBar}>
-                    <img src={bar}/>
+                    <img src={bar} alt=''/>
                     <div className={classes.heroFirstBarFill}></div>
                     <div className={classes.heroFirstBarMask} style={{width: hpBarWidth}}></div>
-                    <div className={classes.valueStyle}><h4>{hero.harmPointValue} / 7</h4></div>
+                    <div className={classes.valueStyle}>
+                      <h4>{hero.harmPointValue} / 7</h4>
+                    </div>
                   </div>
                   <div className={classes.controlsWrapper}>
                     <div className={classes.leftToggle} id={'dec_hp_'+key} onClick={this.handleControlToggle}>
@@ -189,10 +190,12 @@ class PartyView extends React.Component {
                 </div>
                 <div className={classes.barWrapper}>
                   <div className={classes.heroSecondBar}>
-                    <img src={bar}/>
+                    <img src={bar} alt=''/>
                     <div className={classes.heroSecondBarFill}></div>
                     <div className={classes.heroSecondBarMask} style={{width: luckBarWidth}}></div>
-                    <div className={classes.valueStyle}><h4>{hero.luckPointValue} / 7</h4></div>
+                    <div className={classes.valueStyle}>
+                      <h4>{hero.luckPointValue} / 7</h4>
+                    </div>
                   </div>
                   <div className={classes.controlsWrapper}>
                     <div className={classes.leftToggle} id={'dec_luck_'+key} onClick={this.handleControlToggle}>

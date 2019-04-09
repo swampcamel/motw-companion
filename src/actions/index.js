@@ -1,5 +1,5 @@
 import constants from './../constants'
-import {heroesRef} from './../config/firebase'
+import { heroesRef } from './../config/firebase'
 const { actionTypes }  = constants;
 
 export const addHero = newHero =>
