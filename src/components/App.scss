@@ -12,7 +12,16 @@ body {
 }
 
 .pad-top {
-  padding-top: 8%;
+  padding-top: 4%;
+}
+
+.flex-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: row wrap;
+  align-content: stretch;
+  width: 100%;
 }
 
 button{

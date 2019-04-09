@@ -19,7 +19,8 @@ const styles = theme => ({
     zIndex: 5
   },
   heroWrapper: {
-    display: 'flex'
+    display: 'flex',
+    marginBottom: '50px'
   },
   heroStats: {
     transform: 'translateX(-40px)',

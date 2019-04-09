@@ -6,6 +6,7 @@ import generateHero from './HeroModel'
 import {addHero} from './../../actions'
 import logo from './../../img/motwcharlogo.png';
 import { withStyles } from '@material-ui/core/styles';
+import { withRouter } from 'react-router-dom';
 import Input from '@material-ui/core/Input';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
@@ -86,6 +87,7 @@ class CharacterGen extends React.Component {
     addHero(newHero)
     console.log(newHero)
     this.setState({newHeroName: '', newHeroClass: '', newHeroLevel: 1, newHeroImgUrl: ''})
+    this.props.history.push('/PartyView')
   }
 
   render() {
@@ -158,6 +160,7 @@ class CharacterGen extends React.Component {
           onChange={this.handleFormChange}
           />
           </div>
+
           <button type='button' onClick={this.handleFormSubmit}>Submit</button>
         </form>
       </div>
@@ -169,4 +172,4 @@ CharacterGen.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(CharacterGen)
+export default withRouter(withStyles(styles)(CharacterGen));
