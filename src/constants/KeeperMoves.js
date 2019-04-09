@@ -1,4 +1,4 @@
-export defaunt const keeperMoves = [
+export const keeperMoves = [
   {
     id: "km0",
     title: "Keeper Agenda",
@@ -51,7 +51,7 @@ export defaunt const keeperMoves = [
       "Make them acquire stuff",
       "Tell the possible consequences and ask if they want to go ahead",
       "Turn their move back on them",
-      "Offer an opportunity - and maybe a cost"
+      "Offer an opportunity - and maybe a cost",
       "Take away some of the hunters' stuff",
       "Put someone in trouble",
       "Make a threat move, from one of your mystery or arc threats",
@@ -63,7 +63,7 @@ export defaunt const keeperMoves = [
     title: "Harm Moves",
     content: {
       header: "Every time anyone gets hurt, use one of the following",
-      [
+      list: [
         {
           title: "0-harm or more",
           list: [
