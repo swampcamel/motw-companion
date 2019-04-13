@@ -11,10 +11,10 @@ import gameBoardIcon from './../img/gameBoardIcon.png'
 
 const navList = [
   {img: heroViewIcon, alt: 'View Hunters', path: '/PartyView'},
-  {img: genericMovesIcon, alt: 'Player Moves', path: ''},
+  {img: genericMovesIcon, alt: 'Player Moves', path: '/PlayerMoves'},
   {img: gameMasterIcon, alt: 'Keeper Moves', path: '/KeeperMoves'},
-  {img: overallIcon, alt: 'Knowledge Base', path: ''},
-  {img: gameBoardIcon, alt: 'Game Board', path: ''}
+  {img: overallIcon, alt: 'Knowledge Base', path: '/KnowledgeBase'},
+  {img: gameBoardIcon, alt: 'Game Board', path: '/GameBoard'}
 ]
 
 export default function Nav() {
