@@ -1,8 +1,8 @@
-import constants from './../constants';
-const { actionTypes }  = constants;
+import constants from './../constants'
+const { actionTypes } = constants
 
 const mainReducer = (state = {}, action) => {
-let newState;
+let newState
   switch (action.type) {
     case actionTypes.FETCH_HEROES:
       newState = Object.assign({}, state, {
@@ -12,8 +12,8 @@ let newState;
       return newState
 
     default:
-      return state;
+      return state
   }
 }
 
-export default mainReducer;
+export default mainReducer

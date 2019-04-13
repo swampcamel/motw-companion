@@ -2,9 +2,12 @@ export const keeperMoves = [
   {
     id: "km0",
     title: "Keeper Agenda",
-    content: [
+    content: {
+      header: "Welcome",
+      list: [
+
       {
-        header: "Keeper Agenda",
+        title: "Keeper Agenda",
         list: [
           "Make the world seem real",
           "Play to see what happens",
@@ -36,8 +39,8 @@ export const keeperMoves = [
           "What your preparation demands",
           "What honesty demands"
         ]
-      }
-    ]
+      }]
+    }
   },
   {
     id: "km1",
@@ -182,17 +185,12 @@ export const keeperMoves = [
     {
       id: "km8",
       title: "End of Session Experience",
-      content: {
-        header: [
-          "1-2 yes &bull; mark 1",
-          "3-4 yes &bull; mark 2"
-        ],
-        list: [
+      content: [
+          "1-2 yes &bull; mark 1 3-4 yes &bull; mark 2",
           "Did they conclude the current mystery?",
           "Did they save someone from certain death (or worse)?",
           "Did we learn something new and important about the world?",
           "Did we learn something new and important about one of the hunters?"
         ]
       }
-    }
   ]

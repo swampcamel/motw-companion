@@ -1,8 +1,19 @@
 import React from 'react'
-
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { signIn } from "./../../actions";
 import './Welcome.scss'
 
 class Welcome extends React.Component {
+  static contextTypes = {
+    router: PropTypes.object
+  };
+
+  componentWillUpdate(nextProps) {
+    if (nextProps.auth) {
+      this.context.router.history.push("/PartyView");
+    }
+  }
   render() {
     return (
       <div className="App-header">
@@ -28,7 +39,7 @@ class Welcome extends React.Component {
             </g>
           </svg>
         </div>
-          <button type="button">
+          <button type="button" onClick={this.props.signIn}>
               Login
           </button>
       </div>
@@ -36,4 +47,8 @@ class Welcome extends React.Component {
   }
 }
 
-export default Welcome;
+function mapStateToProps({ auth }) {
+  return { auth };
+}
+
+export default connect(mapStateToProps, { signIn })(Welcome);

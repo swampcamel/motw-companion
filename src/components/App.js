@@ -1,14 +1,20 @@
 import React, { Component } from 'react'
-import { Switch, Route, withRouter } from 'react-router-dom'
+import { Switch, Route, withRouter, BrowserRouter } from 'react-router-dom'
 import {connect} from 'react-redux'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import Nav from './Nav'
+import requireAuth from './auth/requireAuth'
+import {fetchUser} from './../actions'
 import Welcome from './Welcome/Welcome'
 import PartyView from './PartyView/PartyView'
 import CharacterGen from './CharacterGen/CharacterGen'
 import KeeperMoves from './KeeperMoves/KeeperMoves'
+
 import './App.scss'
 
+const AuthPartyView = requireAuth(PartyView)
+const AuthCGen = requireAuth(CharacterGen)
+const AuthKMoves = requireAuth(KeeperMoves)
 const theme = createMuiTheme({
   palette: {
     type: 'dark'
@@ -17,6 +23,7 @@ const theme = createMuiTheme({
       useNextVariants: true,
   }
 })
+
 // const newHero = generateHero("Kromdor", "The Monstrous", "Demon", "Pure Drive: Cruelty", "filler stuff",
 // {"charm": 2, "cool": 0, "sharp": -1, "tough": -1, "weird": 3},
 // [{"base":
@@ -30,17 +37,23 @@ const theme = createMuiTheme({
 
 // const loadHero = (userHero) => ({type: actionTypes.GET_HERO, userHero: userHero})
 class App extends Component {
+  constructor(props) {
+    super(props)
+}
+  componentWillMount() {
+    this.props.fetchUser()
+  }
   render() {
     return (
       <div className="App">
         <Nav />
         <MuiThemeProvider theme={theme}>
-        <Switch>
-          <Route exact path='/' render={ () => <Welcome/> } />
-          <Route path='/PartyView' render={ () => <PartyView/>} />
-          <Route path='/CharacterMaker' render={ () => <CharacterGen/>} />
-          <Route path='/KeeperMoves' render={ () => <KeeperMoves/>} />
-        </Switch>
+          <Switch>
+            <Route exact path='/' render={ () => <Welcome/> } />
+            <Route path='/PartyView' render={ () => <AuthPartyView/> } />
+            <Route path='/CharacterMaker'render={ () => <AuthCGen/> } />
+            <Route path='/KeeperMoves' render={ () => <AuthKMoves/> } />
+          </Switch>
         </MuiThemeProvider>
       </div>
   )}
@@ -50,4 +63,4 @@ const mapStateToProps = state => {
   return state
 }
 
-export default withRouter(connect(mapStateToProps)(App))
+export default withRouter(connect(mapStateToProps, {fetchUser})(App))
