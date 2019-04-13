@@ -146,7 +146,8 @@ class PartyView extends React.Component {
 
   handleControlToggle = event => {
     // target ids are written with a modifier_target_key syntax eg. inc_hp_-fakeKey
-    let toggleQuery = event.target.id.split('_')
+    let toggleQuery = event.target.id.split('$')
+    console.log(toggleQuery)
     if (toggleQuery[1] === 'hp') {
       (toggleQuery[0] === 'inc') ?
       this.props.changeHeroHp(
@@ -185,6 +186,7 @@ class PartyView extends React.Component {
 
   render() {
     console.log(this.state)
+    console.log(this.props)
     const { classes, data } = this.props
     const heroes = _.map(data.heroes, (hero, key) => {
       let hpBarWidth, luckBarWidth
@@ -243,9 +245,9 @@ class PartyView extends React.Component {
                     </div>
                   </div>
                   <div className={classes.controlsWrapper}>
-                    <div className={classes.leftToggle} id={'dec_hp_'+key} onClick={this.handleControlToggle}>
+                    <div className={classes.leftToggle} id={'dec$hp$'+key} onClick={this.handleControlToggle}>
                     </div>
-                    <div className={classes.rightToggle} id={'inc_hp_'+key} onClick={this.handleControlToggle}>
+                    <div className={classes.rightToggle} id={'inc$hp$'+key} onClick={this.handleControlToggle}>
                     </div>
                   </div>
                 </div>
