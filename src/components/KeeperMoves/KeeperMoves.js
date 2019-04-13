@@ -67,7 +67,7 @@ class KeeperMoves extends React.Component {
                 key={i}
                 id={navItem.id}
                 className='km-menu-item'
-                onClick={this.selectMenuItem}
+                onClick={(this.selectMenuItem)}
                 >
                 {navItem.title}
               </div>

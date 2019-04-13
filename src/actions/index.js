@@ -2,10 +2,13 @@ import constants from './../constants'
 import { heroesRef, authRef, provider } from './../config/firebase'
 const { actionTypes }  = constants;
 
-export const addHero = newHero =>
-{
+export const addHero = newHero => {
   heroesRef.push().set(newHero)
   console.log('doners')
+}
+
+export const deleteHero = heroId => async dispatch => {
+  heroesRef.child(heroId).remove()
 }
 
 export const changeHeroHp = (heroId, value) => async dispatch => {

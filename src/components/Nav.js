@@ -23,7 +23,7 @@ export default function Nav() {
   {navList.map((item, index) => {
     return (
         <Link key={index} to={item.path}>
-          <div  className='nav-item'>
+          <div className='nav-item'>
             <Tooltip title={item.alt} placement='right'>
               <img src={item.img} alt={item.alt}/>
             </Tooltip>

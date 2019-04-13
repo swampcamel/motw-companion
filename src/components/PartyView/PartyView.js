@@ -1,16 +1,23 @@
 import React from 'react'
-import PropTypes from 'prop-types';
-import { connect } from "react-redux";
-import _ from "lodash";
+import PropTypes from 'prop-types'
+import { connect } from "react-redux"
+import _ from "lodash"
 import { Link } from 'react-router-dom'
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles'
+import Button from '@material-ui/core/Button'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
 
-import * as actions from "./../../actions";
+import * as actions from "./../../actions"
 
 import portrait from './../../img/charportrait.png'
 import bar from './../../img/bar.png'
 import leftArrow from './../../img/left-arrow.png'
 import rightArrow from './../../img/right-arrow.png'
+import closeBtn from './../../img/close-btn.png'
 
 const styles = theme => ({
   portrait: {
@@ -71,11 +78,24 @@ const styles = theme => ({
     transition: 'width ease-in-out 0.5s'
   },
   heroName: {
-    paddingLeft: "20px",
-    marginBottom: "15px",
+    paddingLeft: '20px',
+    marginBottom: '15px',
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    width: '550px'
+  },
+  closeBtn: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: '30px',
+    background: `url(${closeBtn})`,
+    width: '41px',
+    height: '41px',
+    '&:hover': {
+      boxShadow: '0px 0px 15px 4px rgba(183,28,28,0.82)'
+    }
   },
 valueStyle: {
     position: 'absolute',
@@ -114,6 +134,10 @@ valueStyle: {
 class PartyView extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      deleteHeroLoad: null,
+      open: false,
+    }
   }
 
   componentWillMount() {
@@ -146,7 +170,21 @@ class PartyView extends React.Component {
     }
   }
 
+  handleDeleteDialog(heroId) {
+    this.setState({open: true, deleteHeroLoad: heroId})
+  }
+
+  handleClose = () => {
+    this.setState({open: false})
+  }
+
+  handleDeleteHero = heroId => {
+    this.props.deleteHero(heroId)
+    this.setState({open: false, deleteHeroLoad: null})
+  }
+
   render() {
+    console.log(this.state)
     const { classes, data } = this.props
     const heroes = _.map(data.heroes, (hero, key) => {
       let hpBarWidth, luckBarWidth
@@ -171,6 +209,29 @@ class PartyView extends React.Component {
                   <h2>{hero.name}</h2>
                   <h4>THE {hero.type.toUpperCase()}</h4>
                   <h3>Lv. {hero.level}</h3>
+                  <div className={classes.closeBtn} onClick={() => this.handleDeleteDialog(key)}>
+                  </div>
+                   <Dialog
+                    open={this.state.open}
+                    onClose={this.handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                  >
+                    <DialogTitle id="alert-dialog-title">{"Delete this Character?"}</DialogTitle>
+                    <DialogContent>
+                      <DialogContentText id="alert-dialog-description">
+                        By clicking, you agree to permanently remove this character from the server.  This action cannot be undone.
+                      </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={this.handleClose} >
+                        Go Back
+                      </Button>
+                      <Button onClick={() => this.handleDeleteHero(this.state.deleteHeroLoad)} autoFocus>
+                        Axe em
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
                 </div>
                 <div className={classes.barWrapper}>
                   <div className={classes.heroFirstBar}>
