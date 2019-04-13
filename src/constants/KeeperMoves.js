@@ -3,7 +3,7 @@ export const keeperMoves = [
     id: "km0",
     title: "Keeper Agenda",
     content: {
-      header: "Welcome",
+      header: "",
       list: [
 
       {
@@ -15,7 +15,7 @@ export const keeperMoves = [
         ]
       },
       {
-        header: "Principles",
+        title: "Principles",
         list: [
           "Put horror in everyday situations",
           "Address the hunters, not the players",
@@ -32,7 +32,7 @@ export const keeperMoves = [
         ]
       },
       {
-        header: "Always Say...",
+        title: "Always Say...",
         list: [
           "What the principles demand",
           "What the rules demand",

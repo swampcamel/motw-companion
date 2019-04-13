@@ -1,16 +1,27 @@
 .keeper-wrapper {
   height: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   width: 80%;
-  margin: 0 auto
+  margin: 0 auto;
+  padding-top: 2%;
 }
 
 .left-col, .right-col {
-  width: 49%
+  width: 46%
 }
 .right-col {
-  border: 2px white solid
+  border: 2px white solid;
+  padding: 2%
+}
+
+.move-ul {
+  margin-left: 5%;
+  margin-top: 8px;
+}
+
+.inner-ul-title {
+  margin-left: 2%;
 }
 
 .km-menu-item {

@@ -4,8 +4,6 @@ import constants from './../../constants'
 import {keeperMoves} from './../../constants/keeperMoves'
 import './KeeperMoves.scss'
 
-
-
 class KeeperMoves extends React.Component {
   constructor(props) {
     super(props)
@@ -15,31 +13,33 @@ class KeeperMoves extends React.Component {
     this.selectMenuItem = this.selectMenuItem.bind(this)
   }
 
-  contentType(content) {
-
-  }
   renderMoveContent(id) {
     const moveKey = id.charAt(2)
     let keeperContent;
     if (Array.isArray(keeperMoves[moveKey].content)) {
-      keeperContent = keeperMoves[moveKey].content.map( (contentItem, i) =>
-        <div key={i}>
-          {contentItem}
-        </div>
-      )
+      keeperContent = <ul className="move-ul">
+        {keeperMoves[moveKey].content.map( (contentItem, i) =>
+          <li key={i}>
+            {contentItem}
+          </li>
+        )}
+      </ul>
+
     } else {
       keeperContent = <div>
         {keeperMoves[moveKey].content.header}
         {keeperMoves[moveKey].content.list.map((l, i) => {
           console.log(i)
-            return (
+          return (
             <div key={i}>
-              {l.title}
-              {l.list.map((il, i) =>
-                <div key={i}>
-                  {il}
-                </div>
-              )}
+              <h2 className="inner-ul-title">{l.title}</h2>
+              <ul className="move-ul">
+                {l.list.map((il, i) =>
+                  <li key={i}>
+                    {il}
+                  </li>
+                )}
+              </ul>
             </div>
           )
         })}
@@ -47,7 +47,7 @@ class KeeperMoves extends React.Component {
     }
     return (
       <div className='move-content'>
-        {keeperMoves[moveKey].title}
+        <h1>{keeperMoves[moveKey].title}</h1>
         {keeperContent}
       </div>
     )
@@ -58,28 +58,27 @@ class KeeperMoves extends React.Component {
   }
 
   render() {
-    console.log(keeperMoves)
     return (
       <div className='keeper-wrapper'>
         <div className='left-col'>
           {keeperMoves.map((navItem, i) => {
             return(
-            <div
-              key={i}
-              id={navItem.id}
-              className='km-menu-item'
-              onClick={this.selectMenuItem}
-              >
+              <div
+                key={i}
+                id={navItem.id}
+                className='km-menu-item'
+                onClick={this.selectMenuItem}
+                >
                 {navItem.title}
-            </div>
-          )})}
+              </div>
+            )})}
+          </div>
+          <div className='right-col'>
+            {this.renderMoveContent(this.state.selectedMenuItem)}
+          </div>
         </div>
-        <div className='right-col'>
-          {this.renderMoveContent(this.state.selectedMenuItem)}
-        </div>
-      </div>
-    )
+      )
+    }
   }
-}
 
-export default KeeperMoves;
+  export default KeeperMoves;
