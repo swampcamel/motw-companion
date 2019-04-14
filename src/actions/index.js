@@ -19,6 +19,19 @@ export const changeHeroLuck = (heroId, value) => async dispatch => {
   heroesRef.child(heroId).child('luckPointValue').set(value)
 }
 
+export const increaseHeroXP = (heroId, value) => async dispatch => {
+  if (value <= 5) {
+    heroesRef.child(heroId).child('xpPointValue').set(value)
+  } else {
+    console.log("level up instead")
+  }
+}
+
+export const increaseHeroLevel = (heroId, value) => async dispatch => {
+  heroesRef.child(heroId).child('level').set(value)
+  heroesRef.child(heroId).child('xpPointValue').set(0)
+}
+
 export const fetchHeroes = () => async dispatch => {
   heroesRef.on('value', function(snapshot) {
     dispatch({
