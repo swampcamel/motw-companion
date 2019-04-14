@@ -319,9 +319,9 @@ class PartyView extends React.Component {
               </div>
             </div>
             <div className={classes.controlsWrapper}>
-              <div className={classes.leftToggle} id={'dec_luck_'+key} onClick={this.handleControlToggle}>
+              <div className={classes.leftToggle} id={'dec$luck$'+key} onClick={this.handleControlToggle}>
               </div>
-              <div className={classes.rightToggle} onClick={this.handleControlToggle} id={'inc_luck_'+key}>
+              <div className={classes.rightToggle} onClick={this.handleControlToggle} id={'inc$luck$'+key}>
               </div>
             </div>
           </div>

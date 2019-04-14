@@ -11,6 +11,7 @@ import CharacterGen from './CharacterGen/CharacterGen'
 import KeeperMoves from './KeeperMoves/KeeperMoves'
 import HunterMoves from './HunterMoves/HunterMoves'
 import ComingSoon from './ComingSoon/ComingSoon'
+import GameBoard, {ColoredRect} from './GameBoard/GameBoard'
 
 import './App.scss'
 
@@ -55,7 +56,7 @@ class App extends Component {
             <Route path='/KeeperMoves' render={ () => <AuthKMoves/> } />
             <Route path='/HunterMoves' render={ () => <AuthHunterMoves/>} />
             <Route path='/KnowledgeBase' render={ () => <ComingSoon/>} />
-            <Route path='/GameBoard' render={ () => <ComingSoon/>} />
+            <Route path='/GameBoard' render={ () => <GameBoard/>} />
           </Switch>
         </MuiThemeProvider>
       </div>
