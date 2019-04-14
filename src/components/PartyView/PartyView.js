@@ -123,8 +123,9 @@ const styles = theme => ({
   },
   valueStyle: {
     position: 'absolute',
-    top: '30%',
-    right: '15%'
+    top: '45%',
+    right: '10%',
+    transform: 'translateY(-50%)'
   },
   barWrapper: {
     display: 'flex'
