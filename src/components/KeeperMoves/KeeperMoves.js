@@ -1,5 +1,4 @@
 import React from 'react'
-import constants from './../../constants'
 
 import {keeperMoves} from './../../constants/keeperMoves'
 import './KeeperMoves.scss'

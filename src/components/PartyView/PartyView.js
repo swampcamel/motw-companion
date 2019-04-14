@@ -196,7 +196,6 @@ class PartyView extends React.Component {
   handleControlToggle = event => {
     // target ids are written with a modifier_target_key syntax eg. inc_hp_-fakeKey
     let toggleQuery = event.target.id.split('$')
-    console.log(toggleQuery)
     if (toggleQuery[1] === 'hp') {
       (toggleQuery[0] === 'inc') ?
       this.props.changeHeroHp(
@@ -222,8 +221,9 @@ class PartyView extends React.Component {
 
   handleIncreaseXP = event => {
     const currentXP = this.props.data.heroes[event.target.id].xpPointValue
+    const currentLevel = parseInt(this.props.data.heroes[event.target.id].level)
     if (currentXP === 5) {
-      console.log("write some logic")
+      this.props.increaseHeroLevel(event.target.id, (currentLevel + 1))
     } else if (currentXP < 5) {
       this.props.increaseHeroXP(event.target.id, (currentXP + 1))
     }
@@ -244,8 +244,6 @@ class PartyView extends React.Component {
 
 
   render() {
-    console.log(this.state)
-    console.log(this.props)
     const { classes, data } = this.props
     const heroes = _.map(data.heroes, (hero, key) => {
       let hpBarWidth, luckBarWidth
@@ -334,17 +332,14 @@ class PartyView extends React.Component {
                     <Step
                       classes={{
                         root: classes.stepStyles,
-                        completed: classes.completed,
-                        active: classes.active,
-                        disabled: classes.disabled
+                        completed: classes.completed
                       }}
                       key={k}>
                       <StepLabel StepIconProps={{
                           classes: {
                             root: classes.stepStyles,
                             completed: classes.completed,
-                            active: classes.active,
-                            disabled: classes.disabled
+                            active: classes.active
                           }
                         }}></StepLabel>
                       </Step>

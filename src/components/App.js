@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Switch, Route, withRouter, BrowserRouter } from 'react-router-dom'
+import { Switch, Route, withRouter } from 'react-router-dom'
 import {connect} from 'react-redux'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import Nav from './Nav'
@@ -38,9 +38,6 @@ const theme = createMuiTheme({
 
 // const loadHero = (userHero) => ({type: actionTypes.GET_HERO, userHero: userHero})
 class App extends Component {
-  constructor(props) {
-    super(props)
-}
   componentWillMount() {
     this.props.fetchUser()
   }
