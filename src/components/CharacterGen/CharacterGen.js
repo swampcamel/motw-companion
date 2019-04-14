@@ -158,8 +158,8 @@ class CharacterGen extends React.Component {
           }}
           onChange={this.handleFormChange}
           />
+        <a href="https://heroesofthestorm.gamepedia.com/Portrait" target="_blank">Recommended Resource</a>
           </div>
-
           <button type='button' onClick={this.handleFormSubmit}>Submit</button>
         </form>
       </div>

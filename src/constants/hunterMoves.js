@@ -97,7 +97,7 @@ export const hunterMoves = [
         },
         {
           title: "On a 7-9",
-          list: ["Hold 2"]
+          list: ["Hold 1"]
         },
         {
           title: "One hold can be spent to ask the Keeper one of the following questions:",
