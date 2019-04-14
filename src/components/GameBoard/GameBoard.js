@@ -8,10 +8,13 @@ import * as actions from "./../../actions"
 
 const HeroImage = (props) => {
   const [image] = useImage(props.image)
+  const startCoord = 140*props.xCoord - 120
+  // console.log(120+((props.xCoord+1)*20))
+  console.log(props)
   return (
     <Image
-      x={20}
-      y={20}
+      x={startCoord}
+      y={80}
       width={120}
       height={120}
       draggable
@@ -28,8 +31,10 @@ class GameBoard extends React.Component {
   render() {
     console.log(this.props.data)
     const {data} = this.props
+    let tempIndexer = 0;
     const imageLoader = _.map(data.heroes, (hero, key) => {
-      return <HeroImage image={hero.imgUrl} key={key}/>
+      tempIndexer++
+      return <HeroImage xCoord={tempIndexer} image={hero.imgUrl} key={key}/>
     })
       // Stage is a div container
     // Layer is actual canvas element (so you may have several canvases in the stage)
