@@ -9,6 +9,7 @@ import Welcome from './Welcome/Welcome'
 import PartyView from './PartyView/PartyView'
 import CharacterGen from './CharacterGen/CharacterGen'
 import KeeperMoves from './KeeperMoves/KeeperMoves'
+import HunterMoves from './HunterMoves/HunterMoves'
 import ComingSoon from './ComingSoon/ComingSoon'
 
 import './App.scss'
@@ -16,6 +17,7 @@ import './App.scss'
 const AuthPartyView = requireAuth(PartyView)
 const AuthCGen = requireAuth(CharacterGen)
 const AuthKMoves = requireAuth(KeeperMoves)
+const AuthHunterMoves = requireAuth(HunterMoves)
 const theme = createMuiTheme({
   palette: {
     type: 'dark'
@@ -51,7 +53,7 @@ class App extends Component {
             <Route path='/PartyView' render={ () => <AuthPartyView/> } />
             <Route path='/CharacterMaker'render={ () => <AuthCGen/> } />
             <Route path='/KeeperMoves' render={ () => <AuthKMoves/> } />
-            <Route path='/PlayerMoves' render={ () => <ComingSoon/>} />
+            <Route path='/HunterMoves' render={ () => <AuthHunterMoves/>} />
             <Route path='/KnowledgeBase' render={ () => <ComingSoon/>} />
             <Route path='/GameBoard' render={ () => <ComingSoon/>} />
           </Switch>

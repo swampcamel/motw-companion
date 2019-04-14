@@ -12,22 +12,27 @@
 }
 .right-col {
   border: 2px white solid;
-  padding: 2%
+  padding: 2%;
+  height: 100%;
 }
 
 .move-ul {
   margin-left: 5%;
   margin-top: 8px;
+  margin-bottom: 8px;
+  list-style: none;
 }
 
 .inner-ul-title {
   margin-left: 2%;
+  margin-top: 12px;
+  margin-bottom: 5px;
 }
 
 .km-menu-item {
   min-width: 250px;
   max-width: 100%;
-  height: calc(100%/20);
+  height: 25px;
   border: solid 2px white;
   padding: 3%;
   margin-bottom: 2%;

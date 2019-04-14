@@ -22,16 +22,16 @@ import leftArrow from './../../img/left-arrow.png'
 import rightArrow from './../../img/right-arrow.png'
 import closeBtn from './../../img/close-btn.png'
 
-const PyramidIcon = props => {
-  return (
-    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width={25} height={25}>
-      <path fill={props.color} d="M256,0.289L0,379.471l256,132.24l256-132.24L256,0.289z M240.992,470.175L54.582,373.882l186.411-96.294V470.175z
-        M240.992,243.805L67.197,333.582L240.992,76.16V243.805z M271.008,76.16l173.795,257.423l-173.795-89.778V76.16z
-        M271.008,277.588l186.411,96.294l-186.411,96.293V277.588z"/>
-
-    </svg>
-  )
-}
+// const PyramidIcon = props => {
+//   return (
+//     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width={25} height={25}>
+//       <path fill={props.color} d="M256,0.289L0,379.471l256,132.24l256-132.24L256,0.289z M240.992,470.175L54.582,373.882l186.411-96.294V470.175z
+//         M240.992,243.805L67.197,333.582L240.992,76.16V243.805z M271.008,76.16l173.795,257.423l-173.795-89.778V76.16z
+//         M271.008,277.588l186.411,96.294l-186.411,96.293V277.588z"/>
+//
+//     </svg>
+//   )
+// }
 
 const styles = theme => ({
   portrait: {
@@ -359,7 +359,6 @@ class PartyView extends React.Component {
         <Link to='/CharacterMaker'>
           <button>Add Adventurer</button>
         </Link>
-        <PyramidIcon/>
       </div>
     )
   }

@@ -11,7 +11,7 @@ import gameBoardIcon from './../img/gameBoardIcon.png'
 
 const navList = [
   {img: heroViewIcon, alt: 'View Hunters', path: '/PartyView'},
-  {img: genericMovesIcon, alt: 'Player Moves', path: '/PlayerMoves'},
+  {img: genericMovesIcon, alt: 'Hunter Moves', path: '/HunterMoves'},
   {img: gameMasterIcon, alt: 'Keeper Moves', path: '/KeeperMoves'},
   {img: overallIcon, alt: 'Knowledge Base', path: '/KnowledgeBase'},
   {img: gameBoardIcon, alt: 'Game Board', path: '/GameBoard'}
