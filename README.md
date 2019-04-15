@@ -48,9 +48,9 @@ Run ```yarn start``` to serve app over localhost:3000.
 
 ## Example
 
-![Party View]('/screens/partyview.jpg')
-![Hunter View]('/screens/huntermoves.jpg')
-![Game board View]('/screens/gameboard.jpg')
+![Party View](/screens/partyview.jpg)
+![Hunter View](/screens/huntermoves.jpg)
+![Game board View](/screens/gameboard.jpg)
 
 ## Development Status
 
