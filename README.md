@@ -19,9 +19,6 @@
 	</strong>
 </p>
 
-# MotW Companion
-### A Monster of the Week Table-Top RPG Companion App
-
 #### Created by Daniel Mace
 
 ## Overview
