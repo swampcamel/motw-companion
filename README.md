@@ -23,7 +23,7 @@
 
 ## Overview
 
-MotW Companion is browser-based, real-time application that serves as a reference and management tool for running campaigns with the table top game 'Monster of the Week'.
+MotW Companion serves as a reference and management tool for running campaigns with the table top game "Monster of the Week".
 
 #### Features
 
@@ -36,7 +36,9 @@ MotW Companion is browser-based, real-time application that serves as a referenc
 
 ## Installation & Usage
 
-Until deployed for production, MotW Companion required Node v6 or later. Yarn package manager is also recommended.  A Google login is required to access the majority of routes available.
+Until deployed for production, MotW Companion requires Node v6 or later. Yarn package manager is also recommended.  
+
+A Google login is required to access the majority of routes available.
 
 ### Running stable releases with Yarn
 
@@ -46,9 +48,9 @@ Run ```yarn start``` to serve app over localhost:3000.
 
 ## Example
 
-![Party View]('./screens/partyview.jpg')
-![Hunter View]('./screens/huntermoves.jpg')
-![Game board View]('./screens/gameboard.jpg')
+![Party View]('screens/partyview.jpg')
+![Hunter View]('screens/huntermoves.jpg')
+![Game board View]('screens/gameboard.jpg')
 
 ## Development Status
 
