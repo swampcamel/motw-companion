@@ -2,7 +2,7 @@
   MotW Companion
 </h1>
 
-<h3>
+<h3 align="center">
   A Monster of the Week Table-Top RPG Companion App
 </h3>
 
