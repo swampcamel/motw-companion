@@ -5,7 +5,14 @@ import useImage from 'use-image'
 import { connect } from "react-redux"
 import _ from 'lodash'
 import * as actions from "./../../actions"
+import Button from '@material-ui/core/Button'
 import Drawer from '@material-ui/core/Drawer';
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import Input from '@material-ui/core/Input'
 import rightArrow from './../../img/right-arrow.png'
 import './GameBoard.scss'
 
@@ -41,7 +48,10 @@ class GameBoard extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      openDrawer: false
+      openDrawer: false,
+      bgImage: "https://i.pinimg.com/originals/c8/a5/7c/c8a57c06de6ed3ce3842a35be5255bb9.png",
+      formFieldBgImage: "",
+      openBgDialog: false,
     }
   }
   componentWillMount() {
@@ -52,6 +62,21 @@ class GameBoard extends React.Component {
     this.setState({openDrawer: drawerState});
   };
 
+  handleClose = () => {
+    this.setState({openBgDialog: false})
+  }
+
+  handleChangeBgDialog = () => {
+    this.setState({openBgDialog: true})
+  }
+
+  handleChangeBg = () => {
+    this.setState({bgImage: this.state.formFieldBgImage})
+  }
+
+  handleFormChange = event => {
+    this.setState({formFieldBgImage: event.target.value})
+  }
 
   render() {
     console.log(this.props.data)
@@ -74,7 +99,7 @@ class GameBoard extends React.Component {
       <div>
         <Stage width={window.innerWidth - 80} height={window.innerHeight - 10}>
           <Layer>
-            <BgImage image="https://i.pinimg.com/originals/c8/a5/7c/c8a57c06de6ed3ce3842a35be5255bb9.png"/>
+            <BgImage image={this.state.bgImage}/>
             {imageLoader}
           </Layer>
         </Stage>
@@ -84,6 +109,36 @@ class GameBoard extends React.Component {
         <Drawer anchor='right' open={this.state.openDrawer} onClose={this.toggleDrawer(false)}>
           <div>
             {referenceLoader}
+            <div>
+              <img src={rightArrow} onClick={this.handleChangeBgDialog}/>
+              <Dialog
+                open={this.state.openBgDialog}
+                onClose={this.handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+                >
+                <DialogTitle id="alert-dialog-title">{"Change Background Image"}</DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    <Input
+                      type="text"
+                      placeholder="Paste Image URL"
+                      inputProps={{
+                        'aria-label': 'Enter Name',
+                        name: 'newHeroImgUrl',
+                        id: 'hero-img'
+                      }}
+                      onChange={this.handleFormChange}
+                      />
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={this.handleChangeBg} >
+                    Submit
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </div>
           </div>
         </Drawer>
       </div>
