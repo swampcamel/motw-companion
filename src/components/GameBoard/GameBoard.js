@@ -5,11 +5,13 @@ import useImage from 'use-image'
 import { connect } from "react-redux"
 import _ from 'lodash'
 import * as actions from "./../../actions"
+import Drawer from '@material-ui/core/Drawer';
+import rightArrow from './../../img/right-arrow.png'
+import './GameBoard.scss'
 
 const HeroImage = (props) => {
   const [image] = useImage(props.image)
   const startCoord = 140*props.xCoord - 120
-  // console.log(120+((props.xCoord+1)*20))
   console.log(props)
   return (
     <Image
@@ -24,9 +26,20 @@ const HeroImage = (props) => {
 }
 
 class GameBoard extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      openDrawer: false
+    }
+  }
   componentWillMount() {
     this.props.fetchHeroes();
   }
+
+  toggleDrawer = drawerState => () => {
+    this.setState({openDrawer: drawerState});
+  };
+
 
   render() {
     console.log(this.props.data)
@@ -36,15 +49,26 @@ class GameBoard extends React.Component {
       tempIndexer++
       return <HeroImage xCoord={tempIndexer} image={hero.imgUrl} key={key}/>
     })
+
+    const drawerContent = (<div>Content</div>)
+
       // Stage is a div container
     // Layer is actual canvas element (so you may have several canvases in the stage)
     // And then we have canvas shapes inside the Layer
     return (
-      <Stage width={window.innerWidth - 80} height={window.innerHeight - 10}>
-        <Layer>
-          {imageLoader}
-        </Layer>
-      </Stage>
+      <div>
+        <Stage width={window.innerWidth - 80} height={window.innerHeight - 10}>
+          <Layer>
+            {imageLoader}
+          </Layer>
+        </Stage>
+        <div className='menu-icon'>
+          <img src={rightArrow} onClick={this.toggleDrawer(true)}></img>
+        </div>
+        <Drawer anchor='bottom' open={this.state.openDrawer} onClose={this.toggleDrawer(false)}>
+          {drawerContent}
+        </Drawer>
+      </div>
     )
   }
 }
