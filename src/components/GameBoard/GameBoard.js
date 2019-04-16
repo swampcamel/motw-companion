@@ -12,7 +12,6 @@ import './GameBoard.scss'
 const HeroImage = (props) => {
   const [image] = useImage(props.image)
   const startCoord = 140*props.xCoord - 120
-  console.log(props)
   return (
     <Image
       x={startCoord}
@@ -20,6 +19,19 @@ const HeroImage = (props) => {
       width={120}
       height={120}
       draggable
+      image={image}
+    />
+  )
+}
+
+const BgImage = (props) => {
+  const [image] = useImage(props.image)
+  return(
+    <Image
+      x={5}
+      y={5}
+      width={window.innerWidth - 80}
+      height={window.innerHeight - 10}
       image={image}
     />
   )
@@ -49,6 +61,9 @@ class GameBoard extends React.Component {
       tempIndexer++
       return <HeroImage xCoord={tempIndexer} image={hero.imgUrl} key={key}/>
     })
+    const referenceLoader = _.map(data.heroes, (hero, key) => {
+      return(<div key={key}>{hero.name}</div>)
+    })
 
     const drawerContent = (<div>Content</div>)
 
@@ -59,14 +74,17 @@ class GameBoard extends React.Component {
       <div>
         <Stage width={window.innerWidth - 80} height={window.innerHeight - 10}>
           <Layer>
+            <BgImage image="https://i.pinimg.com/originals/c8/a5/7c/c8a57c06de6ed3ce3842a35be5255bb9.png"/>
             {imageLoader}
           </Layer>
         </Stage>
         <div className='menu-icon'>
           <img src={rightArrow} onClick={this.toggleDrawer(true)}></img>
         </div>
-        <Drawer anchor='bottom' open={this.state.openDrawer} onClose={this.toggleDrawer(false)}>
-          {drawerContent}
+        <Drawer anchor='right' open={this.state.openDrawer} onClose={this.toggleDrawer(false)}>
+          <div>
+            {referenceLoader}
+          </div>
         </Drawer>
       </div>
     )

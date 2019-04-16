@@ -11,7 +11,7 @@ import CharacterGen from './CharacterGen/CharacterGen'
 import KeeperMoves from './KeeperMoves/KeeperMoves'
 import HunterMoves from './HunterMoves/HunterMoves'
 import ComingSoon from './ComingSoon/ComingSoon'
-import GameBoard, {HeroImage} from './GameBoard/GameBoard'
+import GameBoard from './GameBoard/GameBoard'
 
 import './App.scss'
 
