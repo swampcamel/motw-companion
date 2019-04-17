@@ -5,7 +5,7 @@ import Konva from 'konva'
 import useImage from 'use-image'
 import { connect } from "react-redux"
 import _ from 'lodash'
-import {updateHeroLayer, addGameAsset, fetchAssets} from "./../../actions"
+import {updateHeroLayer, addGameAsset, fetchAssets, updateAssetLayer} from "./../../actions"
 import Button from '@material-ui/core/Button'
 import Drawer from '@material-ui/core/Drawer';
 import Dialog from '@material-ui/core/Dialog'
@@ -19,6 +19,8 @@ import './GameBoard.scss'
 
 const HeroImage = (props) => {
   const [image] = useImage(props.image)
+  console.log(props)
+  const opacity = props.visible ? 100 : 0
   return (
     <Image
       x={props.x}
@@ -27,7 +29,7 @@ const HeroImage = (props) => {
       height={120}
       draggable
       image={image}
-      opacity={ () => props.visible ? 100 : 0 }
+      opacity={opacity}
       onDragEnd={ e => { props.updateLayer({
         name: props.name,
         id: props.id,
@@ -107,6 +109,10 @@ class GameBoard extends React.Component {
     this.props.updateHeroLayer(layer)
   }
 
+  handleUpdateAsset = (asset) => {
+    this.props.updateAssetLayer(asset)
+  }
+
   handleAddAsset = () => {
     const newAsset = {
       x: 0,
@@ -147,7 +153,9 @@ class GameBoard extends React.Component {
         visible={asset.visible}
         image={asset.image}
         key={key}
-        updateLayer={()=>console.log("win")}/>
+        id={key}
+        name={key}
+        updateLayer={this.handleUpdateAsset}/>
     })
 
 
@@ -249,4 +257,4 @@ const mapStateToProps = state => {
 
 
 
-export default connect(mapStateToProps, {updateHeroLayer, addGameAsset, fetchAssets})(GameBoard)
+export default connect(mapStateToProps, {updateHeroLayer, addGameAsset, fetchAssets, updateAssetLayer})(GameBoard)

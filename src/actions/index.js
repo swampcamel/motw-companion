@@ -43,6 +43,10 @@ export const updateHeroLayer = (gameLayer) => async dispatch => {
   heroesRef.child(gameLayer.id).child('gameLayer').set(gameLayer)
 }
 
+export const updateAssetLayer = (asset) => async dispatch => {
+  gameAssetsRef.child('userUploads').child(asset.id).set(asset)
+}
+
 export const fetchHeroes = () => async dispatch => {
   heroesRef.on('value', function(snapshot) {
     dispatch({
