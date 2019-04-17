@@ -213,8 +213,9 @@ class GameBoard extends React.Component {
           <div className="toolbar">
             {heroReferenceLoader}
             {assetReferenceLoader}
-            <div>
+            <div className="toolbar-control">
               <img alt='' src={rightArrow} onClick={this.handleChangeBgDialog}/>
+              <span>Change Background</span>
               <Dialog
                 open={this.state.openBgDialog}
                 onClose={this.handleClose}
@@ -242,8 +243,9 @@ class GameBoard extends React.Component {
                 </DialogActions>
               </Dialog>
             </div>
-            <div>
+            <div className="toolbar-control">
               <img alt='' src={rightArrow} onClick={this.handleAddAssetDialog}/>
+              <span>Add Layer</span>
               <Dialog
                 open={this.state.openAddAssetDialog}
                 onClose={this.handleCloseAssetDialog}

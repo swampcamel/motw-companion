@@ -8,6 +8,16 @@
   width: 300px
 }
 
+.toolbar-control {
+  display: flex;
+  padding-left: 8px;
+  align-items: center;
+  margin-top: 8px;
+  span {
+    margin-left: 10px
+  }
+}
+
 .hero-control, .asset-control {
   border: 2px solid white;
   margin: 3px 8px 0 0;
