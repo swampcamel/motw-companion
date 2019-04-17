@@ -261,7 +261,10 @@ class PartyView extends React.Component {
         luckBarWidth = parseInt(luckBarWidth) + '%'
       }
       return <div key={key} className={classes.heroWrapper}>
-        <div className={classes.portrait} style={{background: `url(${hero.imgUrl})`}}>
+        <div className={classes.portrait} style={{
+            background: `url(${hero.imgUrl})`,
+            backgroundSize: 'cover'
+        }}>
           <img src={portrait} alt='' width="103%" height="102%" style={{transform: 'translate(-5px, -3px)'}}/>
         </div>
         <div className={classes.heroStats}>

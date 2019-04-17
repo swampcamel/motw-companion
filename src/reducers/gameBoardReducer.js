@@ -6,12 +6,11 @@ let newState
   switch (action.type) {
     case actionTypes.FETCH_GAMEBOARD:
       newState = Object.assign({}, state, {
-        gameBoard: action.payload
+        heroes: action.payload
       })
       return newState
     case actionTypes.FETCH_ASSETS:
-      newState = Object.assign({}, state, Object.assign({}, state.gameBoard, action.payload))
-      console.log(newState)
+      newState = Object.assign({}, state, Object.assign({}, state, action.payload))
       return newState
     default:
       return state

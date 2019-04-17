@@ -43,6 +43,10 @@ export const updateHeroLayer = (gameLayer) => async dispatch => {
   heroesRef.child(gameLayer.id).child('gameLayer').set(gameLayer)
 }
 
+export const toggleHeroOpacity = (heroId, value) => async dispath => {
+  heroesRef.child(heroId).child('gameLayer').child('visible').set(value)
+}
+
 export const updateAssetLayer = (asset) => async dispatch => {
   gameAssetsRef.child('userUploads').child(asset.id).set(asset)
 }
@@ -67,7 +71,7 @@ export const fetchHeroes = () => async dispatch => {
         name: hero.name,
         id: key,
         image: hero.imgUrl,
-        visible: true,
+        visible: hero.gameLayer.visible,
         x: hero.gameLayer.x,
         y: hero.gameLayer.y
       }

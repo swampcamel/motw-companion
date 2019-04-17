@@ -4,7 +4,7 @@ import { Stage, Layer, Image } from 'react-konva'
 import useImage from 'use-image'
 import { connect } from "react-redux"
 import _ from 'lodash'
-import {updateHeroLayer, addGameAsset, fetchAssets, updateAssetLayer, deleteAssetLayer, toggleAssetOpacity} from "./../../actions"
+import {updateHeroLayer, addGameAsset, fetchAssets, updateAssetLayer, deleteAssetLayer, toggleAssetOpacity, toggleHeroOpacity} from "./../../actions"
 import Button from '@material-ui/core/Button'
 import Drawer from '@material-ui/core/Drawer';
 import Dialog from '@material-ui/core/Dialog'
@@ -121,6 +121,13 @@ class GameBoard extends React.Component {
     this.props.toggleAssetOpacity(id, switchValue)
   }
 
+  handleHeroVisible = event => {
+    let switchValue = event.target.attributes[1].value
+    const id = event.target.attributes[0].value
+    switchValue = switchValue === "true" ? false : true
+    this.props.toggleHeroOpacity(id, switchValue)
+  }
+
   handleAddAsset = () => {
     const newAsset = {
       x: 0,
@@ -134,8 +141,8 @@ class GameBoard extends React.Component {
   }
 
   render() {
-    const {gameBoard, userUploads} = this.props.data.game
-    const heroLoader = _.map(gameBoard, (hero, key) => {
+    const {heroes, userUploads} = this.props.data.game
+    const heroLoader = _.map(heroes, (hero, key) => {
       return <HeroImage
         x={hero.x}
         y={hero.y}
@@ -146,8 +153,16 @@ class GameBoard extends React.Component {
         id={hero.id}
         updateLayer={this.handleUpdateLayer} />
     })
-    const heroReferenceLoader = _.map(gameBoard, (hero, key) => {
-      return(<div className="hero-control" key={key}>{hero.name}</div>)
+    const heroReferenceLoader = _.map(heroes, (hero, key) => {
+      return(<div className="hero-control" key={key}>
+      <span
+        id={key}
+        view={hero.visible.toString()}
+        onClick={this.handleHeroVisible}>
+        {hero.name}
+      </span>
+
+      </div>)
     })
 
     const assetReferenceLoader = _.map(userUploads, (asset, key) => {
@@ -276,4 +291,4 @@ const mapStateToProps = state => {
 
 
 
-export default connect(mapStateToProps, {updateHeroLayer, addGameAsset, fetchAssets, updateAssetLayer, deleteAssetLayer, toggleAssetOpacity})(GameBoard)
+export default connect(mapStateToProps, {updateHeroLayer, addGameAsset, fetchAssets, updateAssetLayer, deleteAssetLayer, toggleAssetOpacity, toggleHeroOpacity})(GameBoard)
