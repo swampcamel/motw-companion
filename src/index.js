@@ -13,8 +13,8 @@ import reduxThunk from 'redux-thunk';
 
 const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 
-let unsubscribe = store.subscribe(() =>
-console.log(store.getState()))
+// let unsubscribe = store.subscribe(() =>
+// console.log(store.getState()))
 
 const render = (Component) => {
   ReactDOM.render(

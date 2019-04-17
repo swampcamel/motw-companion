@@ -1,5 +1,6 @@
 import constants from './../constants'
 import { heroesRef, authRef, provider } from './../config/firebase'
+import _ from 'lodash'
 const { actionTypes }  = constants;
 
 export const addHero = newHero => {
@@ -37,6 +38,19 @@ export const fetchHeroes = () => async dispatch => {
     dispatch({
       type: actionTypes.FETCH_HEROES,
       payload: snapshot.val()
+    })
+    const heroLayers = _.map(snapshot.val(), (hero, key) => {
+      return (
+      {
+        name: hero.name,
+        id: key,
+        image: hero.imgUrl,
+        visible: true,
+      }
+    )})
+    dispatch({
+      type: actionTypes.FETCH_GAMEBOARD,
+      payload: heroLayers
     })
   })
 }
@@ -76,3 +90,12 @@ export const signOut = () => dispatch => {
       console.log(error);
     });
 };
+
+export const createBoardState = (heroLayers) => dispatch => {
+  dispatch({
+    type: actionTypes.FETCH_GAMEBOARD,
+    payload: {
+      heroLayers: heroLayers
+    }
+  })
+}

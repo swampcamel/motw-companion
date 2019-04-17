@@ -1,5 +1,5 @@
 import React from 'react'
-import { Stage, Layer, Rect, Image } from 'react-konva'
+import { Stage, Layer, Image } from 'react-konva'
 import Konva from 'konva'
 import useImage from 'use-image'
 import { connect } from "react-redux"
@@ -55,8 +55,9 @@ class GameBoard extends React.Component {
     }
   }
   componentWillMount() {
-    this.props.fetchHeroes();
+    this.props.fetchHeroes()
   }
+
 
   toggleDrawer = drawerState => () => {
     this.setState({openDrawer: drawerState});
@@ -79,18 +80,16 @@ class GameBoard extends React.Component {
   }
 
   render() {
-    console.log(this.props.data)
-    const {data} = this.props
+    const {gameBoard} = this.props.data.game
+
     let tempIndexer = 0;
-    const imageLoader = _.map(data.heroes, (hero, key) => {
+    const imageLoader = _.map(gameBoard, (hero) => {
       tempIndexer++
-      return <HeroImage xCoord={tempIndexer} image={hero.imgUrl} key={key}/>
+      return <HeroImage xCoord={tempIndexer} image={hero.image} key={hero.id}/>
     })
-    const referenceLoader = _.map(data.heroes, (hero, key) => {
+    const referenceLoader = _.map(gameBoard, (hero, key) => {
       return(<div key={key}>{hero.name}</div>)
     })
-
-    const drawerContent = (<div>Content</div>)
 
       // Stage is a div container
     // Layer is actual canvas element (so you may have several canvases in the stage)
@@ -104,13 +103,13 @@ class GameBoard extends React.Component {
           </Layer>
         </Stage>
         <div className='menu-icon'>
-          <img src={rightArrow} onClick={this.toggleDrawer(true)}></img>
+          <img alt='' src={rightArrow} onClick={this.toggleDrawer(true)}></img>
         </div>
         <Drawer anchor='right' open={this.state.openDrawer} onClose={this.toggleDrawer(false)}>
           <div>
             {referenceLoader}
             <div>
-              <img src={rightArrow} onClick={this.handleChangeBgDialog}/>
+              <img alt='' src={rightArrow} onClick={this.handleChangeBgDialog}/>
               <Dialog
                 open={this.state.openBgDialog}
                 onClose={this.handleClose}
@@ -149,7 +148,7 @@ class GameBoard extends React.Component {
 const mapStateToProps = state => {
   let data
   if(!state.isFetching) {
-    data = state.data
+    data = state
   }
   return {
     data
