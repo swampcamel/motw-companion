@@ -47,6 +47,10 @@ export const updateAssetLayer = (asset) => async dispatch => {
   gameAssetsRef.child('userUploads').child(asset.id).set(asset)
 }
 
+export const toggleAssetOpacity = (assetId, value) => async dispatch => {
+  gameAssetsRef.child('userUploads').child(assetId).child('visible').set(value)
+}
+
 export const deleteAssetLayer = (assetId) => async dispatch => {
   gameAssetsRef.child('userUploads').child(assetId).remove()
 }

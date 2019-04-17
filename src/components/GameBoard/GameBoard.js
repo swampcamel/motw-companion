@@ -4,7 +4,7 @@ import { Stage, Layer, Image } from 'react-konva'
 import useImage from 'use-image'
 import { connect } from "react-redux"
 import _ from 'lodash'
-import {updateHeroLayer, addGameAsset, fetchAssets, updateAssetLayer, deleteAssetLayer} from "./../../actions"
+import {updateHeroLayer, addGameAsset, fetchAssets, updateAssetLayer, deleteAssetLayer, toggleAssetOpacity} from "./../../actions"
 import Button from '@material-ui/core/Button'
 import Drawer from '@material-ui/core/Drawer';
 import Dialog from '@material-ui/core/Dialog'
@@ -114,6 +114,13 @@ class GameBoard extends React.Component {
     this.props.deleteAssetLayer(event.target.id)
   }
 
+  handleOpacityChange = event => {
+    let switchValue = event.target.attributes[1].value
+    const id = event.target.attributes[0].value
+    switchValue = switchValue === "true" ? false : true
+    this.props.toggleAssetOpacity(id, switchValue)
+  }
+
   handleAddAsset = () => {
     const newAsset = {
       x: 0,
@@ -145,9 +152,19 @@ class GameBoard extends React.Component {
 
     const assetReferenceLoader = _.map(userUploads, (asset, key) => {
       return(
-        <div className="asset-control" id={key} key={key}>
-          <span>{key}</span>
-          <img id={key} onClick={this.handleDeleteAsset} src={closeBtn} width={20} height={20}/>
+        <div className="asset-control" key={key}>
+          <span
+            id={key}
+            view={asset.visible.toString()}
+            onClick={this.handleOpacityChange}>
+            {key}
+          </span>
+          <img
+            id={key}
+            onClick={this.handleDeleteAsset}
+            src={closeBtn}
+            width={20}
+            height={20} />
         </div>)
       })
 
@@ -259,4 +276,4 @@ const mapStateToProps = state => {
 
 
 
-export default connect(mapStateToProps, {updateHeroLayer, addGameAsset, fetchAssets, updateAssetLayer, deleteAssetLayer})(GameBoard)
+export default connect(mapStateToProps, {updateHeroLayer, addGameAsset, fetchAssets, updateAssetLayer, deleteAssetLayer, toggleAssetOpacity})(GameBoard)
