@@ -246,7 +246,7 @@ class PartyView extends React.Component {
 
   render() {
     const { classes, data } = this.props
-    const heroes = _.map(data.heroes, (hero, key) => {
+    const heroes = _.map(data.data.heroes, (hero, key) => {
       let hpBarWidth, luckBarWidth
       if (hero.harmPointValue <= 0) {
         hpBarWidth = '100%'
@@ -371,7 +371,7 @@ PartyView.propTypes = {
 const mapStateToProps = state => {
   let data
   if(!state.isFetching) {
-    data = state.data
+    data = state
   }
   return {
     data

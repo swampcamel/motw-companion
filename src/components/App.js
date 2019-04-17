@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import Nav from './Nav'
 import requireAuth from './auth/requireAuth'
-import {fetchUser} from './../actions'
+import {fetchUser, fetchHeroes} from './../actions'
 import Welcome from './Welcome/Welcome'
 import PartyView from './PartyView/PartyView'
 import CharacterGen from './CharacterGen/CharacterGen'
@@ -43,8 +43,10 @@ const theme = createMuiTheme({
 class App extends Component {
   componentWillMount() {
     this.props.fetchUser()
+    this.props.fetchHeroes()
   }
   render() {
+    console.log(this.props)
     return (
       <div className="App">
         <Nav />
@@ -67,4 +69,4 @@ const mapStateToProps = state => {
   return state
 }
 
-export default withRouter(connect(mapStateToProps, {fetchUser})(App))
+export default withRouter(connect(mapStateToProps, {fetchUser, fetchHeroes})(App))

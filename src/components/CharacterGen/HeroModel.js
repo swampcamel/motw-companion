@@ -5,7 +5,13 @@ const generateHero = (name, type, level=1, imgUrl) => ({
     xpPointValue: 0,
     harmPointValue: 0,
     luckPointValue: 0,
-    imgUrl: imgUrl
+    imgUrl: imgUrl,
+    gameLayer: {
+      x: 25,
+      y: 25,
+      visible: true,
+      image: imgUrl
+    }
 })
 
 export default generateHero

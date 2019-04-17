@@ -1,15 +1,21 @@
 import constants from './../constants'
-import { heroesRef, authRef, provider } from './../config/firebase'
+import { heroesRef, authRef, gameAssetsRef, provider } from './../config/firebase'
 import _ from 'lodash'
 const { actionTypes }  = constants;
 
 export const addHero = newHero => {
   heroesRef.push().set(newHero)
-  console.log('doners')
 }
-
 export const deleteHero = heroId => async dispatch => {
   heroesRef.child(heroId).remove()
+}
+
+export const addGameAsset = newAsset => async dispatch => {
+  gameAssetsRef.child('userUploads').push().set(newAsset)
+}
+
+export const updateGameAsset = asset => async dispatch => {
+  gameAssetsRef.child('userUploads').child(`${asset.key}`).set(asset)
 }
 
 export const changeHeroHp = (heroId, value) => async dispatch => {
@@ -33,24 +39,44 @@ export const increaseHeroLevel = (heroId, value) => async dispatch => {
   heroesRef.child(heroId).child('xpPointValue').set(0)
 }
 
+export const updateHeroLayer = (gameLayer) => async dispatch => {
+  heroesRef.child(gameLayer.id).child('gameLayer').set(gameLayer)
+}
+
 export const fetchHeroes = () => async dispatch => {
   heroesRef.on('value', function(snapshot) {
     dispatch({
       type: actionTypes.FETCH_HEROES,
       payload: snapshot.val()
     })
-    const heroLayers = _.map(snapshot.val(), (hero, key) => {
-      return (
+  const heroLayers = _.map(snapshot.val(), (hero, key) => {
+    return (
       {
         name: hero.name,
         id: key,
         image: hero.imgUrl,
         visible: true,
+        x: hero.gameLayer.x,
+        y: hero.gameLayer.y
       }
     )})
+    let layerPayload = {}
+    for (let i = 0; i < heroLayers.length; i++) {
+      layerPayload[heroLayers[i].id] = heroLayers[i]
+    }
     dispatch({
       type: actionTypes.FETCH_GAMEBOARD,
-      payload: heroLayers
+      payload: layerPayload
+    })
+  })
+}
+
+
+export const fetchAssets = () => async dispatch => {
+  gameAssetsRef.on('value', function(snapshot) {
+    dispatch({
+      type: actionTypes.FETCH_ASSETS,
+      payload: snapshot.val()
     })
   })
 }

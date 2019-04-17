@@ -1,10 +1,11 @@
 import React from 'react'
+// import HeroImage from './Layer'
 import { Stage, Layer, Image } from 'react-konva'
 import Konva from 'konva'
 import useImage from 'use-image'
 import { connect } from "react-redux"
 import _ from 'lodash'
-import * as actions from "./../../actions"
+import {updateHeroLayer, addGameAsset, fetchAssets} from "./../../actions"
 import Button from '@material-ui/core/Button'
 import Drawer from '@material-ui/core/Drawer';
 import Dialog from '@material-ui/core/Dialog'
@@ -18,18 +19,26 @@ import './GameBoard.scss'
 
 const HeroImage = (props) => {
   const [image] = useImage(props.image)
-  const startCoord = 140*props.xCoord - 120
   return (
     <Image
-      x={startCoord}
-      y={80}
+      x={props.x}
+      y={props.y}
       width={120}
       height={120}
       draggable
       image={image}
+      onDragEnd={ e => { props.updateLayer({
+        name: props.name,
+        id: props.id,
+        image: props.image,
+        visible: props.visible,
+        x: e.target.x(),
+        y: e.target.y()
+      })}}
     />
   )
 }
+
 
 const BgImage = (props) => {
   const [image] = useImage(props.image)
@@ -52,12 +61,14 @@ class GameBoard extends React.Component {
       bgImage: "https://i.pinimg.com/originals/c8/a5/7c/c8a57c06de6ed3ce3842a35be5255bb9.png",
       formFieldBgImage: "",
       openBgDialog: false,
+      openAddAssetDialog: false,
+      formFieldAddImage: ""
     }
   }
-  componentWillMount() {
-    this.props.fetchHeroes()
-  }
 
+  componentWillMount() {
+    this.props.fetchAssets()
+  }
 
   toggleDrawer = drawerState => () => {
     this.setState({openDrawer: drawerState});
@@ -75,21 +86,71 @@ class GameBoard extends React.Component {
     this.setState({bgImage: this.state.formFieldBgImage})
   }
 
+  handleAddAssetDialog = () => {
+    this.setState({openAddAssetDialog: true})
+  }
+
+  handleCloseAssetDialog = () => {
+    this.setState({openAddAssetDialog: false})
+  }
+
   handleFormChange = event => {
     this.setState({formFieldBgImage: event.target.value})
   }
 
-  render() {
-    const {gameBoard} = this.props.data.game
+  handleAddField = event => {
+    this.setState({formFieldAddImage: event.target.value})
+  }
 
-    let tempIndexer = 0;
-    const imageLoader = _.map(gameBoard, (hero) => {
-      tempIndexer++
-      return <HeroImage xCoord={tempIndexer} image={hero.image} key={hero.id}/>
+  handleUpdateLayer = (layer) => {
+    this.props.updateHeroLayer(layer)
+  }
+
+  handleAddAsset = () => {
+    const newAsset = {
+      x: 0,
+      y: 0,
+      image: this.state.formFieldAddImage,
+      visible: true
+    }
+    this.props.addGameAsset(newAsset)
+    this.handleCloseAssetDialog()
+    this.setState({formFieldAddImage: ""})
+  }
+
+  render() {
+    const {gameBoard, userUploads} = this.props.data.game
+    const heroLoader = _.map(gameBoard, (hero, key) => {
+      return <HeroImage
+        x={hero.x}
+        y={hero.y}
+        visible={hero.visible}
+        name={hero.name}
+        image={hero.image}
+        key={key}
+        id={hero.id}
+        updateLayer={this.handleUpdateLayer} />
     })
-    const referenceLoader = _.map(gameBoard, (hero, key) => {
-      return(<div key={key}>{hero.name}</div>)
+    const heroReferenceLoader = _.map(gameBoard, (hero, key) => {
+      return(<div className="hero-control" key={key}>{hero.name}</div>)
     })
+
+    const assetReferenceLoader = _.map(userUploads, (asset, key) => {
+      return(<div className="asset-control" key={key}>{key}</div>)
+    })
+
+    const assetLoader = _.map(userUploads, (asset, key) => {
+      return <HeroImage
+        x={asset.x}
+        y={asset.y}
+        visible={asset.visible}
+        image={asset.image}
+        key={key}
+        updateLayer={()=>console.log("win")}/>
+    })
+
+
+    console.log(userUploads)
 
       // Stage is a div container
     // Layer is actual canvas element (so you may have several canvases in the stage)
@@ -99,15 +160,17 @@ class GameBoard extends React.Component {
         <Stage width={window.innerWidth - 80} height={window.innerHeight - 10}>
           <Layer>
             <BgImage image={this.state.bgImage}/>
-            {imageLoader}
+            {heroLoader}
+            {assetLoader}
           </Layer>
         </Stage>
         <div className='menu-icon'>
           <img alt='' src={rightArrow} onClick={this.toggleDrawer(true)}></img>
         </div>
         <Drawer anchor='right' open={this.state.openDrawer} onClose={this.toggleDrawer(false)}>
-          <div>
-            {referenceLoader}
+          <div className="toolbar">
+            {heroReferenceLoader}
+            {assetReferenceLoader}
             <div>
               <img alt='' src={rightArrow} onClick={this.handleChangeBgDialog}/>
               <Dialog
@@ -118,7 +181,6 @@ class GameBoard extends React.Component {
                 >
                 <DialogTitle id="alert-dialog-title">{"Change Background Image"}</DialogTitle>
                 <DialogContent>
-                  <DialogContentText id="alert-dialog-description">
                     <Input
                       type="text"
                       placeholder="Paste Image URL"
@@ -129,10 +191,39 @@ class GameBoard extends React.Component {
                       }}
                       onChange={this.handleFormChange}
                       />
-                  </DialogContentText>
+                    <div>Add Image</div>
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={this.handleChangeBg} >
+                    Submit
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </div>
+            <div>
+              <img alt='' src={rightArrow} onClick={this.handleAddAssetDialog}/>
+              <Dialog
+                open={this.state.openAddAssetDialog}
+                onClose={this.handleCloseAssetDialog}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+                >
+                <DialogTitle id="alert-dialog-title">{"Add Asset"}</DialogTitle>
+                <DialogContent>
+                    <Input
+                      type="text"
+                      placeholder="Paste Image URL"
+                      inputProps={{
+                        'aria-label': 'Enter Name',
+                        name: 'newImgUrl',
+                        id: 'asset-img'
+                      }}
+                      onChange={this.handleAddField}
+                      />
+                    <div>Add Image</div>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={this.handleAddAsset} >
                     Submit
                   </Button>
                 </DialogActions>
@@ -155,4 +246,6 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, actions)(GameBoard)
+
+
+export default connect(mapStateToProps, {updateHeroLayer, addGameAsset, fetchAssets})(GameBoard)

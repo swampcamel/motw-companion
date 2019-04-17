@@ -9,7 +9,10 @@ let newState
         gameBoard: action.payload
       })
       return newState
-
+    case actionTypes.FETCH_ASSETS:
+      newState = Object.assign({}, state, Object.assign({}, state.gameBoard, action.payload))
+      console.log(newState)
+      return newState
     default:
       return state
   }
