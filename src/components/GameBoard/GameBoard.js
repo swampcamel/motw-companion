@@ -27,6 +27,7 @@ const HeroImage = (props) => {
       height={120}
       draggable
       image={image}
+      opacity={ () => props.visible ? 100 : 0 }
       onDragEnd={ e => { props.updateLayer({
         name: props.name,
         id: props.id,
@@ -136,7 +137,7 @@ class GameBoard extends React.Component {
     })
 
     const assetReferenceLoader = _.map(userUploads, (asset, key) => {
-      return(<div className="asset-control" key={key}>{key}</div>)
+      return(<div className="asset-control" id={key} key={key}>{key}</div>)
     })
 
     const assetLoader = _.map(userUploads, (asset, key) => {
