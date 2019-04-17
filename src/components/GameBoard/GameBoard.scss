@@ -11,5 +11,7 @@
 .hero-control, .asset-control {
   border: 2px solid white;
   margin: 3px 8px 0 0;
-  padding: 3px 5px
+  padding: 3px 5px;
+  display: flex;
+  justify-content: space-between
 }

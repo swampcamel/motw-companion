@@ -47,6 +47,10 @@ export const updateAssetLayer = (asset) => async dispatch => {
   gameAssetsRef.child('userUploads').child(asset.id).set(asset)
 }
 
+export const deleteAssetLayer = (assetId) => async dispatch => {
+  gameAssetsRef.child('userUploads').child(assetId).remove()
+}
+
 export const fetchHeroes = () => async dispatch => {
   heroesRef.on('value', function(snapshot) {
     dispatch({

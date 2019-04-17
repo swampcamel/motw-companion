@@ -1,25 +1,23 @@
 import React from 'react'
 // import HeroImage from './Layer'
 import { Stage, Layer, Image } from 'react-konva'
-import Konva from 'konva'
 import useImage from 'use-image'
 import { connect } from "react-redux"
 import _ from 'lodash'
-import {updateHeroLayer, addGameAsset, fetchAssets, updateAssetLayer} from "./../../actions"
+import {updateHeroLayer, addGameAsset, fetchAssets, updateAssetLayer, deleteAssetLayer} from "./../../actions"
 import Button from '@material-ui/core/Button'
 import Drawer from '@material-ui/core/Drawer';
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Input from '@material-ui/core/Input'
 import rightArrow from './../../img/right-arrow.png'
+import closeBtn from './../../img/close-btn.png'
 import './GameBoard.scss'
 
 const HeroImage = (props) => {
   const [image] = useImage(props.image)
-  console.log(props)
   const opacity = props.visible ? 100 : 0
   return (
     <Image
@@ -41,7 +39,6 @@ const HeroImage = (props) => {
     />
   )
 }
-
 
 const BgImage = (props) => {
   const [image] = useImage(props.image)
@@ -113,6 +110,10 @@ class GameBoard extends React.Component {
     this.props.updateAssetLayer(asset)
   }
 
+  handleDeleteAsset = event => {
+    this.props.deleteAssetLayer(event.target.id)
+  }
+
   handleAddAsset = () => {
     const newAsset = {
       x: 0,
@@ -143,8 +144,12 @@ class GameBoard extends React.Component {
     })
 
     const assetReferenceLoader = _.map(userUploads, (asset, key) => {
-      return(<div className="asset-control" id={key} key={key}>{key}</div>)
-    })
+      return(
+        <div className="asset-control" id={key} key={key}>
+          <span>{key}</span>
+          <img id={key} onClick={this.handleDeleteAsset} src={closeBtn} width={20} height={20}/>
+        </div>)
+      })
 
     const assetLoader = _.map(userUploads, (asset, key) => {
       return <HeroImage
@@ -158,10 +163,7 @@ class GameBoard extends React.Component {
         updateLayer={this.handleUpdateAsset}/>
     })
 
-
-    console.log(userUploads)
-
-      // Stage is a div container
+    // Stage is a div container
     // Layer is actual canvas element (so you may have several canvases in the stage)
     // And then we have canvas shapes inside the Layer
     return (
@@ -257,4 +259,4 @@ const mapStateToProps = state => {
 
 
 
-export default connect(mapStateToProps, {updateHeroLayer, addGameAsset, fetchAssets, updateAssetLayer})(GameBoard)
+export default connect(mapStateToProps, {updateHeroLayer, addGameAsset, fetchAssets, updateAssetLayer, deleteAssetLayer})(GameBoard)
