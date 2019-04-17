@@ -4,7 +4,7 @@ import { Stage, Layer, Image } from 'react-konva'
 import useImage from 'use-image'
 import { connect } from "react-redux"
 import _ from 'lodash'
-import {updateHeroLayer, addGameAsset, fetchAssets, updateAssetLayer, deleteAssetLayer, toggleAssetOpacity, toggleHeroOpacity} from "./../../actions"
+import {updateHeroLayer, addGameAsset, fetchAssets, updateAssetLayer, deleteAssetLayer, toggleAssetOpacity, toggleHeroOpacity, updateBackground} from "./../../actions"
 import Button from '@material-ui/core/Button'
 import Drawer from '@material-ui/core/Drawer';
 import Dialog from '@material-ui/core/Dialog'
@@ -58,7 +58,6 @@ class GameBoard extends React.Component {
     super(props)
     this.state = {
       openDrawer: false,
-      bgImage: "https://i.pinimg.com/originals/c8/a5/7c/c8a57c06de6ed3ce3842a35be5255bb9.png",
       formFieldBgImage: "",
       openBgDialog: false,
       openAddAssetDialog: false,
@@ -83,7 +82,8 @@ class GameBoard extends React.Component {
   }
 
   handleChangeBg = () => {
-    this.setState({bgImage: this.state.formFieldBgImage})
+    this.props.updateBackground(this.state.formFieldBgImage)
+    this.setState({formFieldBgImage: ''})
   }
 
   handleAddAssetDialog = () => {
@@ -194,7 +194,6 @@ class GameBoard extends React.Component {
         name={key}
         updateLayer={this.handleUpdateAsset}/>
     })
-
     // Stage is a div container
     // Layer is actual canvas element (so you may have several canvases in the stage)
     // And then we have canvas shapes inside the Layer
@@ -202,7 +201,7 @@ class GameBoard extends React.Component {
       <div>
         <Stage width={window.innerWidth - 80} height={window.innerHeight - 10}>
           <Layer>
-            <BgImage image={this.state.bgImage}/>
+            <BgImage image={this.props.data.game.background}/>
             {heroLoader}
             {assetLoader}
           </Layer>
@@ -291,4 +290,4 @@ const mapStateToProps = state => {
 
 
 
-export default connect(mapStateToProps, {updateHeroLayer, addGameAsset, fetchAssets, updateAssetLayer, deleteAssetLayer, toggleAssetOpacity, toggleHeroOpacity})(GameBoard)
+export default connect(mapStateToProps, {updateHeroLayer, addGameAsset, fetchAssets, updateAssetLayer, deleteAssetLayer, toggleAssetOpacity, toggleHeroOpacity, updateBackground})(GameBoard)

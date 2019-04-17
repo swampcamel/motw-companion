@@ -59,6 +59,10 @@ export const deleteAssetLayer = (assetId) => async dispatch => {
   gameAssetsRef.child('userUploads').child(assetId).remove()
 }
 
+export const updateBackground = (path) => async dispatch => {
+  gameAssetsRef.child('background').set(path)
+}
+
 export const fetchHeroes = () => async dispatch => {
   heroesRef.on('value', function(snapshot) {
     dispatch({
