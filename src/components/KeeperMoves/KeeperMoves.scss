@@ -38,8 +38,9 @@
   margin-bottom: 2%;
   display: flex;
   align-items: center;
-  &:hover {
+  transition: all 0.085s ease-in;
+  &:hover{
     border: 2px solid #FFFE99;
-    transform: scale(1.02)
+    transform: scale(1.02) translateX(12px)
   }
 }
