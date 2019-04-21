@@ -26,14 +26,14 @@
   padding: 3px 5px;
   display: flex;
   justify-content: space-between;
-  img, span {
-    margin-right: 12px
-  }
 }
 
 .left-ac-wrapper {
   display: flex;
-  align-items: center
+  align-items: center;
+  img, span {
+    margin-right: 12px
+  }
 }
 
 .add-input-wrapper {

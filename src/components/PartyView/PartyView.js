@@ -39,9 +39,15 @@ const styles = theme => ({
     zIndex: 5,
     height: '232.5px'
   },
+  partyWrapper: {
+    display: 'flex',
+    flexFlow: 'wrap',
+    justifyContent: 'space-around',
+  },
   heroWrapper: {
     display: 'flex',
-    marginBottom: '50px'
+    marginBottom: '50px',
+    transform: 'scale(0.8, 0.8)'
   },
   heroStats: {
     transform: 'translateX(-40px)',
@@ -394,11 +400,15 @@ class PartyView extends React.Component {
       </div>
     })
     return(
-      <div className="pad-top centered">
+      <div >
+        <div className={classes.partyWrapper}>
         {heroes}
-        <Link to='/CharacterMaker'>
-          <button>Add Adventurer</button>
-        </Link>
+        </div>
+        <div className="centered">
+          <Link to='/CharacterMaker'>
+            <button>Add Adventurer</button>
+          </Link>
+        </div>
       </div>
     )
   }

@@ -1,5 +1,4 @@
 import React from 'react'
-// import HeroImage from './Layer'
 import { Stage, Layer, Image } from 'react-konva'
 import useImage from 'use-image'
 import { connect } from "react-redux"
@@ -256,7 +255,6 @@ class GameBoard extends React.Component {
                       }}
                       onChange={this.handleFormChange}
                       />
-                    <div>Add Image</div>
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={this.handleChangeBg} >
