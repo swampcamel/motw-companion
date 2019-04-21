@@ -186,7 +186,9 @@ class PartyView extends React.Component {
     super(props)
     this.state = {
       deleteHeroLoad: null,
-      open: false,
+      levelHeroLoad: null,
+      openDelete: false,
+      openLevel: false
     }
   }
 
@@ -195,52 +197,68 @@ class PartyView extends React.Component {
   }
 
   handleControlToggle = event => {
+
     // target ids are written with a modifier_target_key syntax eg. inc_hp_-fakeKey
     let toggleQuery = event.target.id.split('$')
+    console.log(toggleQuery)
     if (toggleQuery[1] === 'hp') {
       (toggleQuery[0] === 'inc') ?
       this.props.changeHeroHp(
         toggleQuery[2],
-        (this.props.data.heroes[toggleQuery[2]].harmPointValue + 1)
+        (this.props.data.data.heroes[toggleQuery[2]].harmPointValue + 1)
       ) :
       this.props.changeHeroHp(
         toggleQuery[2],
-        (this.props.data.heroes[toggleQuery[2]].harmPointValue - 1)
+        (this.props.data.data.heroes[toggleQuery[2]].harmPointValue - 1)
       )
     } else if (toggleQuery[1] === 'luck') {
       (toggleQuery[0] === 'inc') ?
       this.props.changeHeroLuck(
         toggleQuery[2],
-        (this.props.data.heroes[toggleQuery[2]].luckPointValue + 1)
+        (this.props.data.data.heroes[toggleQuery[2]].luckPointValue + 1)
       ) :
       this.props.changeHeroLuck(
         toggleQuery[2],
-        (this.props.data.heroes[toggleQuery[2]].luckPointValue - 1)
+        (this.props.data.data.heroes[toggleQuery[2]].luckPointValue - 1)
       )
     }
   }
 
   handleIncreaseXP = event => {
-    const currentXP = this.props.data.heroes[event.target.id].xpPointValue
-    const currentLevel = parseInt(this.props.data.heroes[event.target.id].level)
+    const currentXP = this.props.data.data.heroes[event.target.id].xpPointValue
+    const currentLevel = parseInt(this.props.data.data.heroes[event.target.id].level)
     if (currentXP === 5) {
-      this.props.increaseHeroLevel(event.target.id, (currentLevel + 1))
+      this.handleXPDialog(event.target.id)
     } else if (currentXP < 5) {
       this.props.increaseHeroXP(event.target.id, (currentXP + 1))
     }
   }
 
-  handleDeleteDialog(heroId) {
-    this.setState({open: true, deleteHeroLoad: heroId})
+  handleXPDialog(heroId) {
+    this.setState({openLevel: true, levelHeroLoad: heroId})
   }
 
-  handleClose = () => {
-    this.setState({open: false})
+  handleCloseXp = () => {
+    this.setState({openLevel: false})
+  }
+
+  handleLevelUp = () => {
+    const currentLevel = parseInt(this.props.data.data.heroes[this.state.levelHeroLoad].level)
+    this.props.increaseHeroLevel(this.state.levelHeroLoad, (currentLevel + 1))
+    this.setState({openLevel: false, levelHeroLoad: null})
+  }
+
+  handleDeleteDialog = (heroId) => {
+    this.setState({openDelete: true, deleteHeroLoad: heroId})
+  }
+
+  handleDeleteClose = () => {
+    this.setState({openDelete: false})
   }
 
   handleDeleteHero = heroId => {
     this.props.deleteHero(heroId)
-    this.setState({open: false, deleteHeroLoad: null})
+    this.setState({openDelete: false, deleteHeroLoad: null})
   }
 
 
@@ -272,11 +290,10 @@ class PartyView extends React.Component {
             <h2>{hero.name}</h2>
             <h4>THE {hero.type.toUpperCase()}</h4>
             <h3>Lv. {hero.level}</h3>
-            <div className={classes.closeBtn} onClick={() => this.handleDeleteDialog(key)}>
-            </div>
+            <div className={classes.closeBtn} onClick={() => this.handleDeleteDialog(key)}></div>
             <Dialog
-              open={this.state.open}
-              onClose={this.handleClose}
+              open={this.state.openDelete}
+              onClose={this.handleDeleteClose}
               aria-labelledby="alert-dialog-title"
               aria-describedby="alert-dialog-description"
               >
@@ -287,7 +304,7 @@ class PartyView extends React.Component {
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
-                <Button onClick={this.handleClose} >
+                <Button onClick={this.handleDeleteClose} >
                   Go Back
                 </Button>
                 <Button onClick={() => this.handleDeleteHero(this.state.deleteHeroLoad)} autoFocus>
@@ -352,6 +369,27 @@ class PartyView extends React.Component {
                 </Stepper>
               </div>
               <div className={classes.xpButton} id={key} onClick={this.handleIncreaseXP}></div>
+              <Dialog
+                open={this.state.openLevel}
+                onClose={this.handleCloseXp}
+                aria-labelledby="xp-alert"
+                aria-describedby="xp-desc"
+                >
+                <DialogTitle id="xp-alert">{"Level up this character?"}</DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="xp-desc">
+                    Are you sure you want to level up?.  This action cannot be undone.
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={this.handleCloseXp} >
+                    Go Back
+                  </Button>
+                  <Button onClick={this.handleLevelUp} autoFocus>
+                    Let's Do This
+                  </Button>
+                </DialogActions>
+              </Dialog>
           </div>
         </div>
       </div>

@@ -29,8 +29,6 @@ export const changeHeroLuck = (heroId, value) => async dispatch => {
 export const increaseHeroXP = (heroId, value) => async dispatch => {
   if (value <= 5) {
     heroesRef.child(heroId).child('xpPointValue').set(value)
-  } else {
-    console.log("level up instead")
   }
 }
 
