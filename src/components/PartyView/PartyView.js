@@ -226,7 +226,6 @@ class PartyView extends React.Component {
 
   handleIncreaseXP = event => {
     const currentXP = this.props.data.data.heroes[event.target.id].xpPointValue
-    const currentLevel = parseInt(this.props.data.data.heroes[event.target.id].level)
     if (currentXP === 5) {
       this.handleXPDialog(event.target.id)
     } else if (currentXP < 5) {

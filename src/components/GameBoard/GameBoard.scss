@@ -5,7 +5,9 @@
 }
 
 .toolbar {
-  width: 300px
+  width: 300px;
+  padding-left: 2%;
+  padding-top: 2%
 }
 
 .toolbar-control {
@@ -23,5 +25,20 @@
   margin: 3px 8px 0 0;
   padding: 3px 5px;
   display: flex;
-  justify-content: space-between
+  justify-content: space-between;
+  img, span {
+    margin-right: 12px
+  }
+}
+
+.left-ac-wrapper {
+  display: flex;
+  align-items: center
+}
+
+.add-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100px
 }

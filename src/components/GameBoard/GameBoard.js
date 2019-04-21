@@ -61,7 +61,8 @@ class GameBoard extends React.Component {
       formFieldBgImage: "",
       openBgDialog: false,
       openAddAssetDialog: false,
-      formFieldAddImage: ""
+      formFieldAddImageUrl: "",
+      formFieldAddImageName: "",
     }
   }
 
@@ -98,8 +99,12 @@ class GameBoard extends React.Component {
     this.setState({formFieldBgImage: event.target.value})
   }
 
-  handleAddField = event => {
-    this.setState({formFieldAddImage: event.target.value})
+  handleAddUrlField = event => {
+    this.setState({formFieldAddImageUrl: event.target.value})
+  }
+
+  handleAddNameField = event => {
+    this.setState({formFieldAddImageName: event.target.value})
   }
 
   handleUpdateLayer = (layer) => {
@@ -132,12 +137,13 @@ class GameBoard extends React.Component {
     const newAsset = {
       x: 0,
       y: 0,
-      image: this.state.formFieldAddImage,
+      image: this.state.formFieldAddImageUrl,
+      name: this.state.formFieldAddImageName,
       visible: true
     }
     this.props.addGameAsset(newAsset)
     this.handleCloseAssetDialog()
-    this.setState({formFieldAddImage: ""})
+    this.setState({formFieldAddImageUrl: "", formFieldAddImageName: ""})
   }
 
   render() {
@@ -155,26 +161,40 @@ class GameBoard extends React.Component {
     })
     const heroReferenceLoader = _.map(heroes, (hero, key) => {
       return(<div className="hero-control" key={key}>
-      <span
-        id={key}
-        view={hero.visible.toString()}
-        onClick={this.handleHeroVisible}>
-        {hero.name}
-      </span>
-
+        <div className="left-ac-wrapper">
+          <img
+            alt="hero reference"
+            src={hero.image}
+            width={20}
+            height={20} />
+          <span
+            id={key}
+            view={hero.visible.toString()}
+            onClick={this.handleHeroVisible}>
+            {hero.name}
+          </span>
+        </div>
       </div>)
     })
 
     const assetReferenceLoader = _.map(userUploads, (asset, key) => {
       return(
         <div className="asset-control" key={key}>
-          <span
-            id={key}
-            view={asset.visible.toString()}
-            onClick={this.handleOpacityChange}>
-            {key}
-          </span>
+          <div className="left-ac-wrapper">
+            <img
+              alt="asset reference"
+              src={asset.image}
+              width={20}
+              height={20} />
+            <span
+              id={key}
+              view={asset.visible.toString()}
+              onClick={this.handleOpacityChange}>
+              {asset.name}
+            </span>
+          </div>
           <img
+            alt="Delete Asset"
             id={key}
             onClick={this.handleDeleteAsset}
             src={closeBtn}
@@ -191,7 +211,7 @@ class GameBoard extends React.Component {
         image={asset.image}
         key={key}
         id={key}
-        name={key}
+        name={asset.name}
         updateLayer={this.handleUpdateAsset}/>
     })
     // Stage is a div container
@@ -211,7 +231,9 @@ class GameBoard extends React.Component {
         </div>
         <Drawer anchor='right' open={this.state.openDrawer} onClose={this.toggleDrawer(false)}>
           <div className="toolbar">
+            <h3>Hunters</h3>
             {heroReferenceLoader}
+            <h3>Assets</h3>
             {assetReferenceLoader}
             <div className="toolbar-control">
               <img alt='' src={rightArrow} onClick={this.handleChangeBgDialog}/>
@@ -253,18 +275,28 @@ class GameBoard extends React.Component {
                 aria-describedby="alert-dialog-description"
                 >
                 <DialogTitle id="alert-dialog-title">{"Add Asset"}</DialogTitle>
-                <DialogContent>
+                <DialogContent className="add-input-wrapper">
                     <Input
                       type="text"
                       placeholder="Paste Image URL"
                       inputProps={{
-                        'aria-label': 'Enter Name',
+                        'aria-label': 'Enter URL',
                         name: 'newImgUrl',
                         id: 'asset-img'
                       }}
-                      onChange={this.handleAddField}
-                      />
-                    <div>Add Image</div>
+                      onChange={this.handleAddUrlField}
+                    />
+                    <Input
+                      type="text"
+                      placeholder="Give it a name"
+                      inputProps={{
+                        'aria-label': 'Enter Name',
+                        name: 'newImgName',
+                        id: 'asset-name'
+                      }}
+                      onChange={this.handleAddNameField}
+                    />
+
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={this.handleAddAsset} >
