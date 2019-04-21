@@ -56,7 +56,7 @@ Run ```yarn start``` to serve app over localhost:3000.
 
 #### Character Tracker - MVP met
 
-Add and remove new characters, track hp, luck and xp.  Figures are updated in real time to Firebase, so multiple users can view changes as they occur.
+Add and remove new characters, track hp, luck, xp and level.  Figures are updated in real time to Firebase, so multiple users can view changes as they occur.
 
 ##### Future Developments
 
@@ -72,7 +72,7 @@ Toggle between types of available moves to view the official entry from MotW abo
 
 ##### Future Developments
 
- - Refactor data structure to utilize database for these entries.  This will allow an admin route that can edit this areas and save changes to the database.
+ - Refactor data structure to utilize database for these entries.  This will allow an admin route that can edit these areas and save changes to the database.
  - Make more attractive interface
 
 #### Knowledgebase - Not yet built
@@ -81,15 +81,14 @@ This will be a reference area where players can add and organize information the
 
 #### Game Board - In Development
 
-The Game Board currently generates Image layers on a Konva Canvas based on the number of heroes currently in the database and supplies the image URL from the entry.  These layers are drag-and-droppable.
-
-Currently, this component has no connection to the database, so changes to the Canvas are not saved anywhere.
+Gameboard maps heroes and assets from database to Konva canvas and provides a toolbar for hiding and showing layers, adding and removing layers, and changing the background image.  Changes are updated in real-time for anyone viewing the gameboard.
 
 ##### Future Development
 
- - Write onMouseUp event that pushes image coordinates to Firebase
- - Write data structure for holding GameBoard coordinates and any future configurations.
- - Allow user to upload a background image for the stage, providing a board for the image layers.
+ - Create user interaction with layers that presents information about the layer
+ - Create user interaction that allows for resizing of layers
+ - Create data reference for saving background image links in order to quickly toggle between backgrounds
+ - Create dice roller tool
 
 ## Contact Info
  - Dan Mace: dmacebeta@gmail.com
