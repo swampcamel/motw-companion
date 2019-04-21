@@ -56,12 +56,11 @@ Run ```yarn start``` to serve app over localhost:3000.
 
 #### Character Tracker - MVP met
 
-Add and remove new characters, track hp, luck, xp and level.  Figures are updated in real time to Firebase, so multiple users can view changes as they occur.
+Add and remove player characters and track a number of character stats.  Figures are updated in real time to Firebase, so multiple users can view changes as they occur.
 
 ##### Future Developments
 
  - Add ability to reduce XP
- - Add dialogue to confirm level up at 5 XP
  - Utilize authorization to allow a user to only be able to edit their own creations
  - Add more detailed info and changeable fields (gear, stats, abilities, status effects)
  - Refactor by splitting into more components
