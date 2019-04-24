@@ -73,7 +73,7 @@ class GameBoard extends React.Component {
     this.setState({openDrawer: drawerState});
   };
 
-  handleClose = () => {
+  handleCloseBgDialog = () => {
     this.setState({openBgDialog: false})
   }
 
@@ -106,11 +106,11 @@ class GameBoard extends React.Component {
     this.setState({formFieldAddImageName: event.target.value})
   }
 
-  handleUpdateLayer = (layer) => {
+  handleUpdateLayer = layer => {
     this.props.updateHeroLayer(layer)
   }
 
-  handleUpdateAsset = (asset) => {
+  handleUpdateAsset = asset => {
     this.props.updateAssetLayer(asset)
   }
 
@@ -175,6 +175,17 @@ class GameBoard extends React.Component {
         </div>
       </div>)
     })
+    const assetLoader = _.map(userUploads, (asset, key) => {
+      return <HeroImage
+        x={asset.x}
+        y={asset.y}
+        visible={asset.visible}
+        image={asset.image}
+        key={key}
+        id={key}
+        name={asset.name}
+        updateLayer={this.handleUpdateAsset}/>
+    })
 
     const assetReferenceLoader = _.map(userUploads, (asset, key) => {
       return(
@@ -202,17 +213,6 @@ class GameBoard extends React.Component {
         </div>)
       })
 
-    const assetLoader = _.map(userUploads, (asset, key) => {
-      return <HeroImage
-        x={asset.x}
-        y={asset.y}
-        visible={asset.visible}
-        image={asset.image}
-        key={key}
-        id={key}
-        name={asset.name}
-        updateLayer={this.handleUpdateAsset}/>
-    })
     // Stage is a div container
     // Layer is actual canvas element (so you may have several canvases in the stage)
     // And then we have canvas shapes inside the Layer
@@ -239,7 +239,7 @@ class GameBoard extends React.Component {
               <span>Change Background</span>
               <Dialog
                 open={this.state.openBgDialog}
-                onClose={this.handleClose}
+                onClose={this.handleCloseBgDialog}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
                 >
