@@ -1,0 +1,26 @@
+.overlay-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.overlay-toolbar {
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+  margin: 0 auto 50px auto;
+  .hero-nav-item {
+    :hover {
+      border: 3px #F0F0DF solid
+    }
+    img {
+      width: 100px;
+      height: 100px;
+    }
+  }
+}
+
+.hero-nav-item-view {
+  border: solid 2px white;
+  width: 1000px;
+}

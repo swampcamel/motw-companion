@@ -10,9 +10,11 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
+import Modal from '@material-ui/core/Modal'
+import Stepper from '@material-ui/core/Stepper'
+import Step from '@material-ui/core/Step'
+import StepLabel from '@material-ui/core/StepLabel'
+import HeroOverlay from './HeroOverlay'
 
 import * as actions from "./../../actions"
 
@@ -21,17 +23,6 @@ import bar from './../../img/bar.png'
 import leftArrow from './../../img/left-arrow.png'
 import rightArrow from './../../img/right-arrow.png'
 import closeBtn from './../../img/close-btn.png'
-
-// const PyramidIcon = props => {
-//   return (
-//     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width={25} height={25}>
-//       <path fill={props.color} d="M256,0.289L0,379.471l256,132.24l256-132.24L256,0.289z M240.992,470.175L54.582,373.882l186.411-96.294V470.175z
-//         M240.992,243.805L67.197,333.582L240.992,76.16V243.805z M271.008,76.16l173.795,257.423l-173.795-89.778V76.16z
-//         M271.008,277.588l186.411,96.294l-186.411,96.293V277.588z"/>
-//
-//     </svg>
-//   )
-// }
 
 const styles = theme => ({
   portrait: {
@@ -185,6 +176,13 @@ const styles = theme => ({
   active: {}, //needed so that the &:active tag works
   completed: {},
   disabled: {},
+  customPaper: {
+    backgroundColor: 'transparent',
+    boxShadow: 'none',
+    minHeight: '80vh',
+    minWidth: '80vw',
+    border: '2px solid white'
+  }
 })
 
 class PartyView extends React.Component {
@@ -194,7 +192,9 @@ class PartyView extends React.Component {
       deleteHeroLoad: null,
       levelHeroLoad: null,
       openDelete: false,
-      openLevel: false
+      openLevel: false,
+      openHeroOverlay: false,
+      selectedHero: "mom"
     }
   }
 
@@ -203,10 +203,8 @@ class PartyView extends React.Component {
   }
 
   handleControlToggle = event => {
-
     // target ids are written with a modifier_target_key syntax eg. inc_hp_-fakeKey
     let toggleQuery = event.target.id.split('$')
-    console.log(toggleQuery)
     if (toggleQuery[1] === 'hp') {
       (toggleQuery[0] === 'inc') ?
       this.props.changeHeroHp(
@@ -266,8 +264,16 @@ class PartyView extends React.Component {
     this.setState({openDelete: false, deleteHeroLoad: null})
   }
 
+  handleCloseHeroOverlay = () => {
+    this.setState({openHeroOverlay: false})
+  }
+
+  handleOpenHeroView = () => {
+    this.setState({openHeroOverlay: true})
+  }
 
   render() {
+
     const { classes, data } = this.props
     const heroes = _.map(data.data.heroes, (hero, key) => {
       let hpBarWidth, luckBarWidth
@@ -288,7 +294,7 @@ class PartyView extends React.Component {
             background: `url(${hero.imgUrl})`,
             backgroundSize: 'cover'
         }}>
-          <img src={portrait} alt='' width="103%" height="102%" style={{transform: 'translate(-5px, -3px)'}}/>
+          <img src={portrait} alt='' width="103%" height="102%" onClick={this.handleOpenHeroView} style={{transform: 'translate(-5px, -3px)'}}/>
         </div>
         <div className={classes.heroStats}>
           <div className={classes.heroName}>
@@ -408,6 +414,17 @@ class PartyView extends React.Component {
           <Link to='/CharacterMaker'>
             <button>Add Adventurer</button>
           </Link>
+          <Dialog
+            PaperProps={{classes: {root: classes.customPaper}}}
+            open={this.state.openHeroOverlay}
+            onClose={this.handleCloseHeroOverlay}
+            aria-labelledby="hero-overlay"
+            aria-describedby="hero-overlay-desc">
+              <DialogTitle id="hero-overlay">{"Hero"}</DialogTitle>
+              <DialogContent>
+                <HeroOverlay />
+              </DialogContent>
+          </Dialog>
         </div>
       </div>
     )

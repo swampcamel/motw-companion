@@ -14,11 +14,8 @@ class HunterMoves extends React.Component {
 
   renderMoveContent(id) {
     const idArg = id.split("-")
-    console.log(id)
-    console.log(idArg[1])
     const moveKey = idArg[1]
     let keeperContent;
-    console.log(hunterMoves)
     if (Array.isArray(hunterMoves[moveKey].content)) {
       keeperContent = <ul className="move-ul">
         {hunterMoves[moveKey].content.map( (contentItem, i) =>
@@ -32,7 +29,6 @@ class HunterMoves extends React.Component {
       keeperContent = <div>
         <h2>{hunterMoves[moveKey].content.header}</h2>
         {hunterMoves[moveKey].content.list.map((l, i) => {
-          console.log(i)
           return (
             <div key={i}>
               <h2 className="inner-ul-title">{l.title}</h2>
