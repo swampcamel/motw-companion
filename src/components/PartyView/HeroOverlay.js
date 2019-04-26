@@ -23,7 +23,7 @@ class HeroOverlay extends React.Component {
 
   render() {
     const menuOptions = [
-      <div>Option 1</div>, <div>Option 2</div>, <div>Option 3</div>, <div>Option 4</div>
+      <CharacterInfo/>, <div>Option 2</div>, <div>Option 3</div>, <div>Option 4</div>
     ]
     return (
       <div className="overlay-container">
